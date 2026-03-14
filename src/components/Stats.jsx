@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import AnimatedCounter from './ui/AnimatedCounter'
+import useIsMobile from '../lib/useIsMobile'
 
 const STATS = [
   { value: 150, suffix: '+', label: 'Enterprise Clients' },
@@ -10,6 +11,7 @@ const STATS = [
 ]
 
 export default function Stats() {
+  const isMobile = useIsMobile()
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -22,42 +24,65 @@ export default function Stats() {
 
   return (
     <section ref={containerRef} className="relative py-28 px-4 sm:px-6 lg:px-8">
-      <motion.div
+      <div
         className="mx-auto max-w-6xl"
-        style={{ scale, opacity, rotateX, transformPerspective: 1200 }}
+        style={isMobile ? {} : undefined}
       >
-        <div className="relative glass rounded-3xl p-14 md:p-20 overflow-hidden beam-border">
-          {/* Background glow */}
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-electric/8 rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple/8 rounded-full blur-[100px]" />
-
-          {/* Grid overlay */}
-          <div className="absolute inset-0 bg-grid opacity-10" />
-
-          <div className="relative grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
-            {STATS.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="text-center"
-              >
-                <div className="font-display text-5xl md:text-6xl font-bold gradient-text">
-                  <AnimatedCounter
-                    value={stat.value}
-                    prefix={stat.prefix || ''}
-                    suffix={stat.suffix}
-                    decimals={stat.decimals || 0}
-                  />
+        {isMobile ? (
+          <div className="relative rounded-3xl p-14 overflow-hidden bg-[rgba(22,22,42,0.85)] border border-white/[0.06]">
+            <div className="absolute inset-0 bg-grid opacity-10" />
+            <div className="relative grid grid-cols-2 gap-10">
+              {STATS.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className="font-display text-5xl font-bold gradient-text">
+                    <AnimatedCounter
+                      value={stat.value}
+                      prefix={stat.prefix || ''}
+                      suffix={stat.suffix}
+                      decimals={stat.decimals || 0}
+                    />
+                  </div>
+                  <p className="mt-3 text-sm text-gray-500">{stat.label}</p>
                 </div>
-                <p className="mt-3 text-sm text-gray-500">{stat.label}</p>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </motion.div>
+        ) : (
+          <motion.div
+            className="mx-auto max-w-6xl"
+            style={{ scale, opacity, rotateX, transformPerspective: 1200 }}
+          >
+            <div className="relative glass rounded-3xl p-14 md:p-20 overflow-hidden beam-border">
+              <div className="absolute top-0 left-1/4 w-64 h-64 bg-electric/8 rounded-full blur-[100px]" />
+              <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple/8 rounded-full blur-[100px]" />
+              <div className="absolute inset-0 bg-grid opacity-10" />
+
+              <div className="relative grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
+                {STATS.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className="text-center"
+                  >
+                    <div className="font-display text-5xl md:text-6xl font-bold gradient-text">
+                      <AnimatedCounter
+                        value={stat.value}
+                        prefix={stat.prefix || ''}
+                        suffix={stat.suffix}
+                        decimals={stat.decimals || 0}
+                      />
+                    </div>
+                    <p className="mt-3 text-sm text-gray-500">{stat.label}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
     </section>
   )
 }

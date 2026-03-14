@@ -5,15 +5,11 @@ import GradientButton from './ui/GradientButton'
 import ReifyCard from './ui/ReifyCard'
 import FloatingElement from './ui/FloatingElement'
 import TypewriterCycle from './ui/TypewriterCycle'
+import useIsMobile from '../lib/useIsMobile'
 
 const HeroScene = lazy(() => import('./3d/HeroScene'))
 
 const LOGO_COLOR = '#7DD3FC'
-
-function useIsMobile() {
-  if (typeof window === 'undefined') return false
-  return window.innerWidth < 768
-}
 
 function AnimatedWords({ children, delay = 0 }) {
   const words = children.split(' ')
@@ -118,8 +114,75 @@ function InteractiveGradient() {
   )
 }
 
-export default function Hero() {
-  const isMobile = useIsMobile()
+/* ─── Simple mobile hero — no scroll animations ─── */
+function MobileHero() {
+  return (
+    <section className="relative min-h-screen px-4 pt-28 pb-16 overflow-hidden">
+      {/* Simple background */}
+      <div className="absolute inset-0 bg-grid opacity-20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,transparent_0%,var(--color-dark)_100%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-electric/5 via-transparent to-purple/5" />
+
+      <div className="relative z-10 text-center">
+        <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-6 py-2.5 text-sm font-medium text-electric-light mb-8">
+          <Sparkles size={14} />
+          AI-Powered Financial Infrastructure
+        </span>
+
+        <h1 className="font-display text-[2.8rem] font-bold leading-[0.9] text-white tracking-[-0.03em] max-w-5xl mx-auto">
+          The Future of
+          <br />
+          <span className="gradient-text">Financial</span>{' '}
+          <TypewriterCycle words={['Automation', 'Intelligence', 'Analytics', 'Compliance']} />
+        </h1>
+
+        <p className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 leading-relaxed">
+          Automate compliance, predict cash flows, detect fraud — all at scale.
+        </p>
+
+        <div className="mt-10 flex flex-col items-center gap-5">
+          <GradientButton className="text-base px-10 py-4 flex items-center gap-2">
+            Get Started Free <ArrowRight size={18} />
+          </GradientButton>
+          <GradientButton variant="outline" className="text-base px-10 py-4">
+            Watch Demo
+          </GradientButton>
+        </div>
+
+        {/* Logo */}
+        <div className="mt-16 mx-auto w-36 h-36">
+          <ReifyCard className="rounded-full w-full h-full">
+            <div className="p-8 flex items-center justify-center h-full">
+              <GearBrainSVG />
+            </div>
+          </ReifyCard>
+        </div>
+
+        {/* Cards */}
+        <div className="mt-12 grid grid-cols-1 gap-4">
+          {CARDS.map((card) => (
+            <ReifyCard key={card.title} className="rounded-2xl">
+              <div className="p-6 text-center">
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-electric/20 to-purple/20 flex items-center justify-center mb-4">
+                  <card.icon size={24} className="text-electric-light" />
+                </div>
+                <h3 className="font-display text-lg font-semibold text-white mb-2">
+                  {card.title}
+                </h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  {card.desc}
+                </p>
+              </div>
+            </ReifyCard>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── Desktop hero — full scroll animations ─── */
+function DesktopHero() {
   const sectionRef = useRef(null)
 
   const { scrollYProgress } = useScroll({
@@ -127,97 +190,61 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  // ── Phase 1: Text fades out (0 → 0.15) ──
   const textOpacity = useTransform(scrollYProgress, [0, 0.08, 0.16], [1, 1, 0])
   const textY = useTransform(scrollYProgress, [0, 0.16], [0, -80])
 
-  // ── Phase 2: Logo spins, moves to center, then dissolves (0 → 0.32) ──
   const logoRotate = useTransform(scrollYProgress, [0, 0.32], [0, 720])
-  // Logo moves from bottom position to screen center
   const logoBottom = useTransform(scrollYProgress, [0, 0.15], ['8%', '42%'])
   const logoScale = useTransform(scrollYProgress, [0, 0.12, 0.22, 0.32], [1, 1.1, 0.8, 0.15])
   const logoOpacity = useTransform(scrollYProgress, [0.24, 0.32], [1, 0])
   const logoBlur = useTransform(scrollYProgress, [0.24, 0.32], [0, 12])
   const logoFilter = useTransform(logoBlur, (v) => `blur(${v}px)`)
 
-  // ── Phase 3: Cards burst out from center (0.25 → 0.42), stay until end ──
-  // Cards start tiny at center, then scale + fan out to grid
   const cardsOpacity = useTransform(scrollYProgress, [0.25, 0.34], [0, 1])
   const cardsContainerScale = useTransform(scrollYProgress, [0.25, 0.42], [0.3, 1])
 
-  // Each card starts at center (0,0) then moves to its grid position
   const cardSpread = useTransform(scrollYProgress, [0.25, 0.42], [0, 1])
-  // ── Desktop: cards spread horizontally from center ──
   const card0X = useTransform(cardSpread, [0, 1], [200, 0])
   const card1Scale = useTransform(cardSpread, [0, 0.5, 1], [0.5, 0.8, 1])
   const card2X = useTransform(cardSpread, [0, 1], [-200, 0])
   const cardRiseY = useTransform(cardSpread, [0, 1], [40, 0])
 
-  // ── Mobile: middle card appears first, then side cards split out later ──
-  // Phase A: middle card appears alone (0.25 → 0.34)
-  const middleCardMobileScale = useTransform(scrollYProgress, [0.25, 0.34], [0.5, 1])
-  // Phase B: side cards derive from middle (0.36 → 0.50)
-  const mobileSpread = useTransform(scrollYProgress, [0.36, 0.50], [0, 1])
-  const sideCardMobileOpacity = useTransform(scrollYProgress, [0.36, 0.43], [0, 1])
-  const card0MobileY = useTransform(mobileSpread, [0, 1], [120, 0])   // starts at middle, slides up
-  const card2MobileY = useTransform(mobileSpread, [0, 1], [-120, 0])  // starts at middle, slides down
-  const sideCardMobileScale = useTransform(mobileSpread, [0, 1], [0.3, 1])
-
   return (
-    <section
-      ref={sectionRef}
-      className={`relative ${isMobile ? 'h-[250vh]' : 'h-[400vh]'}`}
-    >
-      {/* Background layers — sticky */}
+    <section ref={sectionRef} className="relative h-[400vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Grid + depth gradients */}
         <div className="absolute inset-0 bg-grid opacity-20" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,transparent_0%,var(--color-dark)_100%)]" />
 
-        {/* Glow orbs */}
         <div className="glow-orb w-[800px] h-[800px] bg-electric/8 top-[5%] -left-60" />
         <div className="glow-orb w-[600px] h-[600px] bg-purple/8 bottom-[15%] -right-40" />
 
-        {/* Interactive mouse-following gradient */}
-        {!isMobile && <InteractiveGradient />}
+        <InteractiveGradient />
 
-        {/* Floating decorative elements — desktop only */}
-        {!isMobile && (
-          <>
-            <FloatingElement delay={0} duration={7} range={20} className="absolute top-[15%] left-[8%] z-0 opacity-20">
-              <div className="w-3 h-3 rounded-full bg-electric blur-[2px]" />
-            </FloatingElement>
-            <FloatingElement delay={1.5} duration={8} range={18} className="absolute top-[25%] right-[12%] z-0 opacity-15">
-              <div className="w-2 h-2 rotate-45 bg-purple" />
-            </FloatingElement>
-            <FloatingElement delay={3} duration={9} range={12} className="absolute bottom-[30%] left-[15%] z-0 opacity-15">
-              <div className="w-4 h-4 rounded-full border border-electric/40" />
-            </FloatingElement>
-            <FloatingElement delay={2} duration={6} range={16} className="absolute top-[60%] right-[8%] z-0 opacity-20">
-              <div className="w-2.5 h-2.5 rounded-full bg-purple-light blur-[1px]" />
-            </FloatingElement>
-            <FloatingElement delay={4} duration={10} range={14} className="absolute top-[40%] left-[5%] z-0 opacity-10">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="#3388FF" />
-              </svg>
-            </FloatingElement>
-          </>
-        )}
+        <FloatingElement delay={0} duration={7} range={20} className="absolute top-[15%] left-[8%] z-0 opacity-20">
+          <div className="w-3 h-3 rounded-full bg-electric blur-[2px]" />
+        </FloatingElement>
+        <FloatingElement delay={1.5} duration={8} range={18} className="absolute top-[25%] right-[12%] z-0 opacity-15">
+          <div className="w-2 h-2 rotate-45 bg-purple" />
+        </FloatingElement>
+        <FloatingElement delay={3} duration={9} range={12} className="absolute bottom-[30%] left-[15%] z-0 opacity-15">
+          <div className="w-4 h-4 rounded-full border border-electric/40" />
+        </FloatingElement>
+        <FloatingElement delay={2} duration={6} range={16} className="absolute top-[60%] right-[8%] z-0 opacity-20">
+          <div className="w-2.5 h-2.5 rounded-full bg-purple-light blur-[1px]" />
+        </FloatingElement>
+        <FloatingElement delay={4} duration={10} range={14} className="absolute top-[40%] left-[5%] z-0 opacity-10">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="#3388FF" />
+          </svg>
+        </FloatingElement>
 
-        {/* 3D Scene */}
-        {!isMobile && (
-          <div className="absolute inset-0 -z-10">
-            <Suspense fallback={null}>
-              <HeroScene />
-            </Suspense>
-          </div>
-        )}
+        <div className="absolute inset-0 -z-10">
+          <Suspense fallback={null}>
+            <HeroScene />
+          </Suspense>
+        </div>
 
-        {isMobile && (
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-electric/5 via-transparent to-purple/5" />
-        )}
-
-        {/* ═══ TEXT — top half ═══ */}
+        {/* TEXT */}
         <motion.div
           className="absolute top-0 left-0 right-0 pt-28 sm:pt-36 px-4 text-center z-10"
           style={{ opacity: textOpacity, y: textY }}
@@ -266,7 +293,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* ═══ BIG LOGO — center bottom, rotates on scroll ═══ */}
+        {/* BIG LOGO */}
         <motion.div
           className="absolute left-1/2 -translate-x-1/2 z-20"
           style={{
@@ -290,7 +317,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* ═══ 3 CARDS — emerge as logo fades ═══ */}
+        {/* 3 CARDS */}
         <motion.div
           className="absolute inset-0 flex items-center justify-center z-20 px-4"
           style={{
@@ -298,31 +325,17 @@ export default function Hero() {
             scale: cardsContainerScale,
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
+          <div className="grid grid-cols-3 gap-6 max-w-5xl w-full">
             {CARDS.map((card, i) => {
               const isMiddle = i === 1
-              const isSide = i === 0 || i === 2
-
-              // Desktop styles
-              const desktopStyle = {
+              const style = {
                 x: i === 0 ? card0X : i === 2 ? card2X : 0,
                 y: cardRiseY,
                 scale: isMiddle ? card1Scale : 1,
               }
 
-              // Mobile: middle card first, side cards later
-              const mobileStyle = {
-                x: 0,
-                y: i === 0 ? card0MobileY : i === 2 ? card2MobileY : 0,
-                scale: isMiddle ? middleCardMobileScale : sideCardMobileScale,
-                opacity: isSide ? sideCardMobileOpacity : 1,
-              }
-
               return (
-                <motion.div
-                  key={card.title}
-                  style={isMobile ? mobileStyle : desktopStyle}
-                >
+                <motion.div key={card.title} style={style}>
                   <ReifyCard className="rounded-2xl">
                     <div className="p-8 text-center">
                       <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-electric/20 to-purple/20 flex items-center justify-center mb-5">
@@ -342,7 +355,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Scroll indicator — only at start */}
+        {/* Scroll indicator */}
         <motion.div
           className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30"
           style={{ opacity: useTransform(scrollYProgress, [0, 0.08], [1, 0]) }}
@@ -368,4 +381,9 @@ export default function Hero() {
       </div>
     </section>
   )
+}
+
+export default function Hero() {
+  const isMobile = useIsMobile()
+  return isMobile ? <MobileHero /> : <DesktopHero />
 }

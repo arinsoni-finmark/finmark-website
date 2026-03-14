@@ -1,8 +1,10 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { TRUSTED_LOGOS } from '../lib/constants'
+import useIsMobile from '../lib/useIsMobile'
 
 export default function TrustedBy() {
+  const isMobile = useIsMobile()
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -12,6 +14,29 @@ export default function TrustedBy() {
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
 
   const doubled = [...TRUSTED_LOGOS, ...TRUSTED_LOGOS]
+
+  if (isMobile) {
+    return (
+      <section ref={ref} className="relative py-16 overflow-hidden">
+        <p className="text-center text-xs text-gray-600 uppercase tracking-[0.3em] mb-10">
+          Trusted by industry leaders
+        </p>
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-dark to-transparent z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-dark to-transparent z-10" />
+          <div className="flex animate-marquee whitespace-nowrap">
+            {doubled.map((name, i) => (
+              <div key={`a-${i}`} className="mx-8 flex-shrink-0 flex items-center justify-center">
+                <span className="text-xl font-display font-semibold text-gray-700/60 select-none">
+                  {name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <motion.section
@@ -29,7 +54,6 @@ export default function TrustedBy() {
       </motion.p>
 
       <div className="relative">
-        {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-dark to-transparent z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-dark to-transparent z-10" />
 

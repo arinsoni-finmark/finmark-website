@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import GlowBadge from './ui/GlowBadge'
 import ReifyCard from './ui/ReifyCard'
+import useIsMobile from '../lib/useIsMobile'
 
 const SHOWCASE_ITEMS = [
   {
@@ -34,25 +35,19 @@ const SHOWCASE_ITEMS = [
   },
 ]
 
-function ShowcaseCard({ item, index }) {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-  return (
-    <motion.div
-      initial={isMobile ? { opacity: 0, y: 30 } : { clipPath: 'inset(10% 10% 10% 10% round 24px)', opacity: 0 }}
-      whileInView={isMobile ? { opacity: 1, y: 0 } : { clipPath: 'inset(0% 0% 0% 0% round 24px)', opacity: 1 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
-      <ReifyCard className="rounded-3xl h-full">
-        {/* Fake app preview area */}
-        <div className="relative h-56 sm:h-64 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-dark-card to-dark" />
-          <div className="absolute inset-0 bg-grid opacity-20" />
+function ShowcaseCard({ item, index, isMobile }) {
+  const content = (
+    <ReifyCard className="rounded-3xl h-full">
+      {/* Fake app preview area */}
+      <div className="relative h-56 sm:h-64 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-dark-card to-dark" />
+        <div className="absolute inset-0 bg-grid opacity-20" />
 
-          {/* Accent gradient blob */}
-          <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br ${item.accent} opacity-15 rounded-full blur-[60px]`} />
+        {/* Accent gradient blob */}
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br ${item.accent} opacity-15 rounded-full ${isMobile ? 'blur-[30px]' : 'blur-[60px]'}`} />
 
-          {/* Animated chart lines */}
+        {/* Chart lines — desktop only */}
+        {!isMobile && (
           <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 200">
             <motion.path
               d={index === 0
@@ -78,45 +73,50 @@ function ShowcaseCard({ item, index }) {
               </linearGradient>
             </defs>
           </svg>
+        )}
 
-          {/* Stats overlay */}
-          <div className="absolute bottom-4 left-4 right-4 flex gap-3">
-            {item.stats.map((stat, i) => (
-              <motion.div
-                key={i}
-                className="rounded-lg px-3 py-2 flex-1 bg-[rgba(22,22,42,0.85)] md:bg-[rgba(22,22,42,0.7)] md:backdrop-blur-md border border-white/[0.06]"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8 + index * 0.15 + i * 0.1 }}
-              >
-                <div className="text-xs text-gray-500">{stat.label}</div>
-                <div className="text-sm font-mono font-bold text-white">{stat.value}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Arrow */}
-          <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[rgba(22,22,42,0.6)] backdrop-blur-md border border-white/[0.06] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <ArrowUpRight size={16} className="text-electric-light" />
-          </div>
+        {/* Stats overlay */}
+        <div className="absolute bottom-4 left-4 right-4 flex gap-3">
+          {item.stats.map((stat, i) => (
+            <div
+              key={i}
+              className="rounded-lg px-3 py-2 flex-1 bg-[rgba(22,22,42,0.85)] border border-white/[0.06]"
+            >
+              <div className="text-xs text-gray-500">{stat.label}</div>
+              <div className="text-sm font-mono font-bold text-white">{stat.value}</div>
+            </div>
+          ))}
         </div>
+      </div>
 
-        {/* Card content */}
-        <div className="p-6">
-          <h3 className="font-display text-xl font-semibold text-white">
-            {item.title}
-          </h3>
-          <p className="mt-2 text-sm text-gray-400 leading-relaxed">
-            {item.description}
-          </p>
-        </div>
-      </ReifyCard>
+      {/* Card content */}
+      <div className="p-6">
+        <h3 className="font-display text-xl font-semibold text-white">
+          {item.title}
+        </h3>
+        <p className="mt-2 text-sm text-gray-400 leading-relaxed">
+          {item.description}
+        </p>
+      </div>
+    </ReifyCard>
+  )
+
+  if (isMobile) return <div>{content}</div>
+
+  return (
+    <motion.div
+      initial={{ clipPath: 'inset(10% 10% 10% 10% round 24px)', opacity: 0 }}
+      whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 24px)', opacity: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.9, delay: index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
+      {content}
     </motion.div>
   )
 }
 
 export default function Showcase() {
+  const isMobile = useIsMobile()
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -132,48 +132,67 @@ export default function Showcase() {
       className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       <div className="absolute inset-0 bg-grid opacity-8" />
-      <motion.div
-        className="glow-orb w-[500px] h-[500px] bg-electric/5 top-0 left-1/4"
-        style={{ y: bgY }}
-      />
-      <motion.div
-        className="glow-orb w-[400px] h-[400px] bg-purple/5 bottom-0 right-1/4"
-        style={{ y: bgY }}
-      />
+      {!isMobile && (
+        <>
+          <motion.div
+            className="glow-orb w-[500px] h-[500px] bg-electric/5 top-0 left-1/4"
+            style={{ y: bgY }}
+          />
+          <motion.div
+            className="glow-orb w-[400px] h-[400px] bg-purple/5 bottom-0 right-1/4"
+            style={{ y: bgY }}
+          />
+        </>
+      )}
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <GlowBadge>Product</GlowBadge>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-            className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
-          >
-            Built for <span className="gradient-text">Scale</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-5 max-w-2xl mx-auto text-lg text-gray-400"
-          >
-            Enterprise-grade tools designed to handle millions of transactions
-            while keeping you in control.
-          </motion.p>
+          {isMobile ? (
+            <>
+              <GlowBadge>Product</GlowBadge>
+              <h2 className="mt-5 font-display text-4xl font-bold text-white tracking-tight">
+                Built for <span className="gradient-text">Scale</span>
+              </h2>
+              <p className="mt-5 max-w-2xl mx-auto text-lg text-gray-400">
+                Enterprise-grade tools designed to handle millions of transactions
+                while keeping you in control.
+              </p>
+            </>
+          ) : (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <GlowBadge>Product</GlowBadge>
+              </motion.div>
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
+              >
+                Built for <span className="gradient-text">Scale</span>
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="mt-5 max-w-2xl mx-auto text-lg text-gray-400"
+              >
+                Enterprise-grade tools designed to handle millions of transactions
+                while keeping you in control.
+              </motion.p>
+            </>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SHOWCASE_ITEMS.map((item, i) => (
-            <ShowcaseCard key={item.title} item={item} index={i} />
+            <ShowcaseCard key={item.title} item={item} index={i} isMobile={isMobile} />
           ))}
         </div>
       </div>
