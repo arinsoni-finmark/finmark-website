@@ -1,21 +1,70 @@
+import { useEffect } from 'react'
+import Lenis from 'lenis'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import FeatureTicker from './components/FeatureTicker'
+import TrustedBy from './components/TrustedBy'
+import Showcase from './components/Showcase'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
 import Services from './components/Services'
+import Stats from './components/Stats'
+import Testimonials from './components/Testimonials'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 
 export default function App() {
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  })
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    })
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
+
+    return () => lenis.destroy()
+  }, [])
+
   return (
-    <div className="min-h-screen bg-dark">
-      <Navbar />
-      <Hero />
-      <Features />
-      <HowItWorks />
-      <Services />
-      <CTA />
-      <Footer />
-    </div>
+    <>
+      <Cursor />
+
+      <div className="min-h-screen bg-dark noise-overlay">
+
+        {/* Scroll progress bar */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-electric via-purple to-electric-light z-[100] origin-left"
+          style={{ scaleX }}
+        />
+
+        <Navbar />
+        <Hero />
+        <FeatureTicker />
+        <TrustedBy />
+        <Showcase />
+        <Features />
+        <HowItWorks />
+        <Services />
+        <Stats />
+        <Testimonials />
+        <CTA />
+        <Footer />
+      </div>
+    </>
   )
 }

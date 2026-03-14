@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { NAV_LINKS } from '../lib/constants'
 import GradientButton from './ui/GradientButton'
+import LogoIcon from './ui/LogoIcon'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const navOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1])
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50)
@@ -15,31 +18,58 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass shadow-lg shadow-black/20' : 'bg-transparent'
+    <motion.nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'glass-strong shadow-lg shadow-black/30'
+          : 'bg-transparent'
       }`}
+      initial={{ y: -80 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
+      {/* Bottom border that fades in on scroll */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric/30 to-transparent"
+        style={{ opacity: navOpacity }}
+      />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-electric to-purple" />
+          <a href="#" className="flex items-center gap-2.5">
+            <LogoIcon size={32} />
             <span className="font-display text-xl font-bold text-white">Finmark</span>
           </a>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <a
+            {NAV_LINKS.map((link, i) => (
+              <motion.a
                 key={link.label}
                 href={link.href}
-                className="text-sm text-gray-400 transition-colors hover:text-white"
+                className="relative text-sm text-gray-400 transition-colors hover:text-white py-1"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * i + 0.3 }}
+                whileHover="hover"
               >
                 {link.label}
-              </a>
+                <motion.span
+                  className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-electric to-purple"
+                  initial={{ scaleX: 0 }}
+                  variants={{ hover: { scaleX: 1 } }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.a>
             ))}
-            <GradientButton className="text-sm px-5 py-2">Get Started</GradientButton>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <GradientButton className="text-sm px-5 py-2">Get Started</GradientButton>
+            </motion.div>
           </div>
 
           {/* Mobile toggle */}
@@ -59,24 +89,28 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass border-t border-white/5"
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="md:hidden glass-strong border-t border-white/5"
           >
             <div className="px-4 py-4 space-y-3">
-              {NAV_LINKS.map((link) => (
-                <a
+              {NAV_LINKS.map((link, i) => (
+                <motion.a
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="block text-gray-400 hover:text-white py-2"
+                  className="block text-gray-400 hover:text-white py-2 transition-colors"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
               <GradientButton className="w-full text-sm mt-2">Get Started</GradientButton>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   )
 }

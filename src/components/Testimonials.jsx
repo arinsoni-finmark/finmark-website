@@ -1,57 +1,110 @@
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import { TESTIMONIALS } from '../lib/constants'
-import SectionWrapper from './ui/SectionWrapper'
-import GlowBadge from './ui/GlowBadge'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Quote } from 'lucide-react'
+import { TESTIMONIALS } from '../lib/constants'
+import GlowBadge from './ui/GlowBadge'
+import ReifyCard from './ui/ReifyCard'
+
+function TestimonialCard({ testimonial, index }) {
+  return (
+    <motion.div
+      initial={{ clipPath: 'inset(8% 8% 8% 8% round 16px)', opacity: 0 }}
+      whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 16px)', opacity: 1 }}
+      viewport={{ once: true, margin: '-30px' }}
+      transition={{
+        duration: 0.8,
+        delay: index * 0.12,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+    >
+      <ReifyCard className="rounded-2xl h-full">
+        <div className="p-8 flex flex-col h-full">
+          <Quote size={32} className="text-electric/20 mb-4 flex-shrink-0" />
+
+          <p className="text-gray-300 leading-relaxed flex-1 text-[15px]">
+            &ldquo;{testimonial.quote}&rdquo;
+          </p>
+
+          <div className="mt-6 flex items-center gap-3 pt-4 border-t border-white/5">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-electric to-purple flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+              {testimonial.avatar}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-white">
+                {testimonial.name}
+              </p>
+              <p className="text-xs text-gray-500">{testimonial.role}</p>
+            </div>
+          </div>
+        </div>
+      </ReifyCard>
+    </motion.div>
+  )
+}
 
 export default function Testimonials() {
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  })
+
+  const bgY = useTransform(scrollYProgress, [0, 1], [60, -60])
+
   return (
-    <SectionWrapper id="testimonials">
-      <div className="mx-auto max-w-7xl">
-        <div className="text-center mb-16">
-          <GlowBadge>Testimonials</GlowBadge>
-          <h2 className="mt-4 font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">
-            Trusted by Finance Leaders
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-gray-400">
-            See what industry leaders say about transforming their operations with Finmark.
-          </p>
+    <section
+      ref={containerRef}
+      id="testimonials"
+      className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
+    >
+      <div className="aurora" style={{ opacity: 0.6 }} />
+      <div className="absolute inset-0 bg-grid opacity-10" />
+      <motion.div
+        className="glow-orb w-[400px] h-[400px] bg-purple/8 top-1/4 -right-32"
+        style={{ y: bgY }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <GlowBadge>Testimonials</GlowBadge>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
+          >
+            Trusted by <span className="gradient-text">Finance Leaders</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="mt-5 max-w-2xl mx-auto text-lg text-gray-400"
+          >
+            See what industry leaders say about transforming their operations
+            with Finmark.
+          </motion.p>
         </div>
 
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={24}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          className="pb-12"
-        >
-          {TESTIMONIALS.map((t) => (
-            <SwiperSlide key={t.name}>
-              <div className="glass rounded-2xl p-6 h-full flex flex-col">
-                <Quote size={28} className="text-electric/30 mb-4" />
-                <p className="text-gray-300 leading-relaxed flex-1">{t.quote}</p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-electric to-purple flex items-center justify-center text-sm font-bold text-white">
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-white">{t.name}</p>
-                    <p className="text-xs text-gray-500">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {TESTIMONIALS.slice(0, 3).map((t, i) => (
+            <TestimonialCard key={t.name} testimonial={t} index={i} />
           ))}
-        </Swiper>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 max-w-4xl mx-auto">
+          {TESTIMONIALS.slice(3, 5).map((t, i) => (
+            <TestimonialCard key={t.name} testimonial={t} index={i + 3} />
+          ))}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   )
 }
