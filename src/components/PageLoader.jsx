@@ -93,8 +93,8 @@ export default function PageLoader({ onComplete }) {
               {'Finmark'.split('').map((letter, i) => (
                 <motion.span
                   key={i}
-                  initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + i * 0.06, duration: 0.5 }}
                 >
                   {letter}

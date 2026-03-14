@@ -166,7 +166,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[400vh]"
+      className={`relative ${isMobile ? 'h-[250vh]' : 'h-[400vh]'}`}
     >
       {/* Background layers — sticky */}
       <div className="sticky top-0 h-screen overflow-hidden">
@@ -181,24 +181,28 @@ export default function Hero() {
         {/* Interactive mouse-following gradient */}
         {!isMobile && <InteractiveGradient />}
 
-        {/* Floating decorative elements */}
-        <FloatingElement delay={0} duration={7} range={20} className="absolute top-[15%] left-[8%] z-0 opacity-20">
-          <div className="w-3 h-3 rounded-full bg-electric blur-[2px]" />
-        </FloatingElement>
-        <FloatingElement delay={1.5} duration={8} range={18} className="absolute top-[25%] right-[12%] z-0 opacity-15">
-          <div className="w-2 h-2 rotate-45 bg-purple" />
-        </FloatingElement>
-        <FloatingElement delay={3} duration={9} range={12} className="absolute bottom-[30%] left-[15%] z-0 opacity-15">
-          <div className="w-4 h-4 rounded-full border border-electric/40" />
-        </FloatingElement>
-        <FloatingElement delay={2} duration={6} range={16} className="absolute top-[60%] right-[8%] z-0 opacity-20">
-          <div className="w-2.5 h-2.5 rounded-full bg-purple-light blur-[1px]" />
-        </FloatingElement>
-        <FloatingElement delay={4} duration={10} range={14} className="absolute top-[40%] left-[5%] z-0 opacity-10">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="#3388FF" />
-          </svg>
-        </FloatingElement>
+        {/* Floating decorative elements — desktop only */}
+        {!isMobile && (
+          <>
+            <FloatingElement delay={0} duration={7} range={20} className="absolute top-[15%] left-[8%] z-0 opacity-20">
+              <div className="w-3 h-3 rounded-full bg-electric blur-[2px]" />
+            </FloatingElement>
+            <FloatingElement delay={1.5} duration={8} range={18} className="absolute top-[25%] right-[12%] z-0 opacity-15">
+              <div className="w-2 h-2 rotate-45 bg-purple" />
+            </FloatingElement>
+            <FloatingElement delay={3} duration={9} range={12} className="absolute bottom-[30%] left-[15%] z-0 opacity-15">
+              <div className="w-4 h-4 rounded-full border border-electric/40" />
+            </FloatingElement>
+            <FloatingElement delay={2} duration={6} range={16} className="absolute top-[60%] right-[8%] z-0 opacity-20">
+              <div className="w-2.5 h-2.5 rounded-full bg-purple-light blur-[1px]" />
+            </FloatingElement>
+            <FloatingElement delay={4} duration={10} range={14} className="absolute top-[40%] left-[5%] z-0 opacity-10">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 0L12.5 7.5L20 10L12.5 12.5L10 20L7.5 12.5L0 10L7.5 7.5L10 0Z" fill="#3388FF" />
+              </svg>
+            </FloatingElement>
+          </>
+        )}
 
         {/* 3D Scene */}
         {!isMobile && (
@@ -219,8 +223,8 @@ export default function Hero() {
           style={{ opacity: textOpacity, y: textY }}
         >
           <motion.div
-            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-6 py-2.5 text-sm font-medium text-electric-light mb-8 backdrop-blur-sm">
@@ -239,8 +243,8 @@ export default function Hero() {
           </h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
             className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed"
           >
@@ -248,8 +252,8 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4 }}
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5"
           >
