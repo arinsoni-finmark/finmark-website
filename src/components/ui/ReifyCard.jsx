@@ -7,9 +7,15 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
  * Uses CSS custom properties for the shine + border glow (performant, reliable)
  * and framer-motion spring physics for the 3D tilt only.
  */
+function useIsMobile() {
+  if (typeof window === 'undefined') return false
+  return window.innerWidth < 768
+}
+
 export default function ReifyCard({ children, className = '' }) {
   const ref = useRef(null)
   const [hovered, setHovered] = useState(false)
+  const isMobile = useIsMobile()
 
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
@@ -23,7 +29,7 @@ export default function ReifyCard({ children, className = '' }) {
   const rotateX = useTransform(sy, [-0.5, 0.5], [15, -15])
 
   const onMove = useCallback((e) => {
-    if (!ref.current) return
+    if (!ref.current || isMobile) return
     const r = ref.current.getBoundingClientRect()
     const x = (e.clientX - r.left) / r.width - 0.5
     const y = (e.clientY - r.top) / r.height - 0.5
@@ -34,27 +40,28 @@ export default function ReifyCard({ children, className = '' }) {
     ref.current.style.setProperty('--ry', `${e.clientY - r.top}px`)
     const angle = Math.atan2(y, x) * (180 / Math.PI) + 180
     ref.current.style.setProperty('--angle', `${angle}deg`)
-  }, [mx, my])
+  }, [mx, my, isMobile])
 
-  const onEnter = useCallback(() => setHovered(true), [])
+  const onEnter = useCallback(() => { if (!isMobile) setHovered(true) }, [isMobile])
 
   const onLeave = useCallback(() => {
+    if (isMobile) return
     mx.set(0)
     my.set(0)
     setHovered(false)
-  }, [mx, my])
+  }, [mx, my, isMobile])
 
   return (
     <motion.div
       ref={ref}
       className={`reify-card ${hovered ? 'is-hovered' : ''} ${className}`}
-      style={{
+      style={isMobile ? {} : {
         rotateX,
         rotateY,
         transformPerspective: 1000,
         transformStyle: 'preserve-3d',
       }}
-      whileHover={{ scale: 1.03 }}
+      whileHover={isMobile ? {} : { scale: 1.03 }}
       transition={{ type: 'spring', stiffness: 200, damping: 20 }}
       onMouseMove={onMove}
       onMouseEnter={onEnter}

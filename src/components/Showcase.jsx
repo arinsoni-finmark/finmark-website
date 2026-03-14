@@ -35,12 +35,13 @@ const SHOWCASE_ITEMS = [
 ]
 
 function ShowcaseCard({ item, index }) {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
   return (
     <motion.div
-      initial={{ clipPath: 'inset(10% 10% 10% 10% round 24px)', opacity: 0 }}
-      whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 24px)', opacity: 1 }}
+      initial={isMobile ? { opacity: 0, y: 30 } : { clipPath: 'inset(10% 10% 10% 10% round 24px)', opacity: 0 }}
+      whileInView={isMobile ? { opacity: 1, y: 0 } : { clipPath: 'inset(0% 0% 0% 0% round 24px)', opacity: 1 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.9, delay: index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       <ReifyCard className="rounded-3xl h-full">
         {/* Fake app preview area */}
@@ -83,7 +84,7 @@ function ShowcaseCard({ item, index }) {
             {item.stats.map((stat, i) => (
               <motion.div
                 key={i}
-                className="rounded-lg px-3 py-2 flex-1 bg-[rgba(22,22,42,0.7)] backdrop-blur-md border border-white/[0.06]"
+                className="rounded-lg px-3 py-2 flex-1 bg-[rgba(22,22,42,0.85)] md:bg-[rgba(22,22,42,0.7)] md:backdrop-blur-md border border-white/[0.06]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
