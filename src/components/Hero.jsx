@@ -191,7 +191,7 @@ function DesktopHero() {
 
   const logoBottom = useTransform(scrollYProgress, [0, 0.15], ['8%', '42%'])
   const logoRotate = useTransform(scrollYProgress, [0, 0.18], [90, 0])
-  const logoScale = useTransform(scrollYProgress, [0, 0.12, 0.22, 0.32], [1, 1.1, 0.8, 0.15])
+  const logoScale = useTransform(scrollYProgress, [0, 0.12, 0.22, 0.32], [0.5, 1.1, 0.8, 0.15])
   const logoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.24, 0.32], [0.15, 0.15, 1, 0])
   const logoBlur = useTransform(scrollYProgress, [0.24, 0.32], [0, 12])
   const logoFilter = useTransform(logoBlur, (v) => `blur(${v}px)`)
@@ -299,8 +299,8 @@ function DesktopHero() {
             opacity: logoOpacity,
             filter: logoFilter,
           }}
-          initial={{ opacity: 0.15, scale: 0.8 }}
-          animate={{ opacity: 0.15, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.3 }}
+          animate={{ opacity: 0.15, scale: 0.5 }}
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
           <div className="w-[160px] sm:w-[220px] md:w-[280px] lg:w-[340px]">
