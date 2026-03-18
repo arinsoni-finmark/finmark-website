@@ -246,7 +246,7 @@ function DesktopHero() {
 
         {/* TEXT */}
         <motion.div
-          className="absolute top-0 left-0 right-0 pt-28 sm:pt-36 px-4 text-center z-10"
+          className="absolute top-0 left-0 right-0 pt-28 sm:pt-36 px-4 text-center z-20"
           style={{ opacity: textOpacity, y: textY }}
         >
           <motion.div
@@ -295,7 +295,7 @@ function DesktopHero() {
 
         {/* BIG LOGO */}
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 z-20"
+          className="absolute left-1/2 -translate-x-1/2 z-10"
           style={{
             bottom: logoBottom,
             rotate: logoRotate,
