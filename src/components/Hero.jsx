@@ -308,7 +308,7 @@ function DesktopHero() {
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
-          <div className="w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56">
+          <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-56 lg:h-56">
             <ReifyCard className="rounded-full w-full h-full">
               <div className="p-8 sm:p-10 md:p-12 flex items-center justify-center h-full">
                 <GearBrainSVG />
