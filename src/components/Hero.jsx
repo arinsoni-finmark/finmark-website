@@ -150,8 +150,8 @@ function MobileHero() {
         </div>
 
         {/* Logo */}
-        <div className="mt-16 mx-auto w-36 h-36">
-          <img src="/logo.png" alt="Finmark" className="w-full h-full object-contain" />
+        <div className="mt-16 mx-auto w-[240px] opacity-20">
+          <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
         </div>
 
         {/* Cards */}
@@ -190,8 +190,9 @@ function DesktopHero() {
   const textY = useTransform(scrollYProgress, [0, 0.16], [0, -80])
 
   const logoBottom = useTransform(scrollYProgress, [0, 0.15], ['8%', '42%'])
+  const logoRotate = useTransform(scrollYProgress, [0, 0.18], [90, 0])
   const logoScale = useTransform(scrollYProgress, [0, 0.12, 0.22, 0.32], [1, 1.1, 0.8, 0.15])
-  const logoOpacity = useTransform(scrollYProgress, [0.24, 0.32], [1, 0])
+  const logoOpacity = useTransform(scrollYProgress, [0, 0.05, 0.24, 0.32], [0.15, 0.15, 1, 0])
   const logoBlur = useTransform(scrollYProgress, [0.24, 0.32], [0, 12])
   const logoFilter = useTransform(logoBlur, (v) => `blur(${v}px)`)
 
@@ -288,21 +289,22 @@ function DesktopHero() {
           </motion.div>
         </motion.div>
 
-        {/* BIG LOGO */}
+        {/* BIG LOGO — starts vertical, rotates to horizontal on scroll */}
         <motion.div
           className="absolute left-1/2 -translate-x-1/2 z-[5] pointer-events-none"
           style={{
             bottom: logoBottom,
+            rotate: logoRotate,
             scale: logoScale,
             opacity: logoOpacity,
             filter: logoFilter,
           }}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0.15, scale: 0.8 }}
+          animate={{ opacity: 0.15, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
-          <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-56 lg:h-56">
-            <img src="/logo.png" alt="Finmark" className="w-full h-full object-contain" />
+          <div className="w-[280px] sm:w-[360px] md:w-[420px] lg:w-[500px]">
+            <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
           </div>
         </motion.div>
 
