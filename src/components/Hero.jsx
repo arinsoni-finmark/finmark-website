@@ -126,7 +126,7 @@ function MobileHero() {
       <div className="relative z-10 text-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 text-xs font-medium text-electric-light mb-6">
           <Sparkles size={12} />
-          AI-Powered Financial Infrastructure
+          AI-Powered Unified Infrastructure
         </span>
 
         <h1 className="font-display text-[2rem] font-bold leading-[0.95] text-white tracking-[-0.03em] max-w-5xl mx-auto">
@@ -249,7 +249,7 @@ function DesktopHero() {
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-medium text-electric-light mb-6 sm:mb-8 backdrop-blur-sm">
               <Sparkles size={14} />
-              AI-Powered Financial Infrastructure
+              AI-Powered Unified Infrastructure
             </span>
           </motion.div>
 
