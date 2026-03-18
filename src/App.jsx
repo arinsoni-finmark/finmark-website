@@ -5,7 +5,6 @@ import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import FeatureTicker from './components/FeatureTicker'
-import Showcase from './components/Showcase'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
 import Services from './components/Services'
@@ -58,7 +57,6 @@ export default function App() {
         <Navbar />
         <Hero />
         <FeatureTicker />
-        <Showcase />
         <Features />
         <HowItWorks />
         <Services />
