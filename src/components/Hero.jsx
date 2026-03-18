@@ -144,9 +144,6 @@ function MobileHero() {
           <GradientButton className="text-sm px-7 py-3 flex items-center gap-2">
             Get Started Free <ArrowRight size={16} />
           </GradientButton>
-          <GradientButton variant="outline" className="text-sm px-7 py-3">
-            Watch Demo
-          </GradientButton>
         </div>
 
         {/* Logo */}
@@ -283,9 +280,6 @@ function DesktopHero() {
           >
             <GradientButton className="text-sm sm:text-base px-7 py-3 sm:px-10 sm:py-4 flex items-center gap-2">
               Get Started Free <ArrowRight size={16} />
-            </GradientButton>
-            <GradientButton variant="outline" className="text-sm sm:text-base px-7 py-3 sm:px-10 sm:py-4">
-              Watch Demo
             </GradientButton>
           </motion.div>
         </motion.div>
