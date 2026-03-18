@@ -5,7 +5,6 @@ import Cursor from './components/Cursor'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import FeatureTicker from './components/FeatureTicker'
-import TrustedBy from './components/TrustedBy'
 import Showcase from './components/Showcase'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
@@ -60,7 +59,6 @@ export default function App() {
         <Navbar />
         <Hero />
         <FeatureTicker />
-        <TrustedBy />
         <Showcase />
         <Features />
         <HowItWorks />
