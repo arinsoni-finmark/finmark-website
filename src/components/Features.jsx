@@ -107,8 +107,7 @@ export default function Features() {
                 Intelligence at <span className="gradient-text">Every Layer</span>
               </h2>
               <p className="mt-5 max-w-2xl mx-auto text-lg text-gray-400">
-                Our AI engine processes millions of data points in real-time to
-                deliver insights that move your business forward.
+                Our AI-powered platform transforms data into actionable insights across finance, operations, marketing, and beyond—helping your business move faster and smarter.
               </p>
             </>
           ) : (
@@ -137,14 +136,13 @@ export default function Features() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="mt-5 max-w-2xl mx-auto text-lg text-gray-400"
               >
-                Our AI engine processes millions of data points in real-time to
-                deliver insights that move your business forward.
+                Our AI-powered platform transforms data into actionable insights across finance, operations, marketing, and beyond—helping your business move faster and smarter.
               </motion.p>
             </>
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {FEATURES.map((feature, i) => (
             <FeatureCard key={feature.title} feature={feature} index={i} isMobile={isMobile} />
           ))}

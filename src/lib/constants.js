@@ -3,6 +3,8 @@ import {
   Shield,
   TrendingUp,
   FileText,
+  Zap,
+  Layers,
   CreditCard,
   ShieldCheck,
   AlertTriangle,
@@ -23,25 +25,37 @@ export const FEATURES = [
     icon: Brain,
     title: 'AI-Powered Analytics',
     description:
-      'Deep learning models analyze transaction patterns in real-time, delivering actionable insights that transform raw data into strategic advantage.',
+      'Leverage advanced AI models to analyze data across business functions in real time—turning raw information into actionable insights and strategic decisions.',
   },
   {
     icon: Shield,
     title: 'Smart Compliance',
     description:
-      'Automated regulatory monitoring with AI-driven risk scoring ensures you stay ahead of evolving compliance requirements across jurisdictions.',
+      'Stay ahead of regulatory requirements with automated monitoring, intelligent risk scoring, and audit-ready systems across financial and operational workflows.',
   },
   {
     icon: TrendingUp,
     title: 'Predictive Forecasting',
     description:
-      'Machine learning algorithms forecast cash flows, revenue trends, and market movements with institutional-grade accuracy.',
+      'Forecast revenue, demand, and performance trends using machine learning models that provide accurate, forward-looking insights for better planning.',
   },
   {
     icon: FileText,
     title: 'Intelligent Reporting',
     description:
-      'Auto-generated financial reports with natural language summaries, custom dashboards, and one-click stakeholder distribution.',
+      'Generate real-time reports with automated summaries, customizable dashboards, and seamless sharing across teams and stakeholders.',
+  },
+  {
+    icon: Zap,
+    title: 'Workflow Automation',
+    description:
+      'Automate repetitive tasks across finance, operations, and marketing—improving efficiency and reducing manual effort.',
+  },
+  {
+    icon: Layers,
+    title: 'Unified Data Platform',
+    description:
+      'Bring all your business data into a single source of truth, enabling better collaboration, visibility, and decision-making.',
   },
 ]
 
