@@ -303,7 +303,7 @@ function DesktopHero() {
           animate={{ opacity: 0.15, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
-          <div className="w-[200px] sm:w-[280px] md:w-[340px] lg:w-[420px]">
+          <div className="w-[160px] sm:w-[220px] md:w-[280px] lg:w-[340px]">
             <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
           </div>
         </motion.div>
