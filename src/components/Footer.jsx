@@ -25,7 +25,7 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center mb-4">
-              <img src="/logo-full.png" alt="Finmark" className="h-8 w-auto" />
+              <img src="/logo-full.png" alt="FinMark.ai" className="h-8 w-auto" />
             </div>
             <p className="text-sm text-gray-500 max-w-xs leading-relaxed">
               AI-powered financial automation for the modern enterprise.

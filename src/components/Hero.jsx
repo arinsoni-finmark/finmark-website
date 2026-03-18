@@ -151,7 +151,7 @@ function MobileHero() {
 
         {/* Logo */}
         <div className="mt-10 mx-auto w-[180px] opacity-20">
-          <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
+          <img src="/logo-full.png" alt="FinMark.ai" className="w-full h-auto object-contain" />
         </div>
 
         {/* Cards */}
@@ -304,7 +304,7 @@ function DesktopHero() {
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
           <div className="w-[160px] sm:w-[220px] md:w-[280px] lg:w-[340px]">
-            <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
+            <img src="/logo-full.png" alt="FinMark.ai" className="w-full h-auto object-contain" />
           </div>
         </motion.div>
 

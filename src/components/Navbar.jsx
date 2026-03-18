@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center">
-            <img src="/logo-full.png" alt="Finmark" className="h-8 w-auto" />
+            <img src="/logo-full.png" alt="FinMark.ai" className="h-8 w-auto" />
           </a>
 
           {/* Desktop nav */}
