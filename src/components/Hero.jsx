@@ -295,7 +295,7 @@ function DesktopHero() {
 
         {/* BIG LOGO */}
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 z-10"
+          className="absolute left-1/2 -translate-x-1/2 z-[5] pointer-events-none"
           style={{
             bottom: logoBottom,
             rotate: logoRotate,
