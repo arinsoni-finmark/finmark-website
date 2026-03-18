@@ -151,11 +151,7 @@ function MobileHero() {
 
         {/* Logo */}
         <div className="mt-16 mx-auto w-36 h-36">
-          <ReifyCard className="rounded-full w-full h-full">
-            <div className="p-8 flex items-center justify-center h-full">
-              <GearBrainSVG />
-            </div>
-          </ReifyCard>
+          <img src="/logo.png" alt="Finmark" className="w-full h-full object-contain" />
         </div>
 
         {/* Cards */}
@@ -193,7 +189,6 @@ function DesktopHero() {
   const textOpacity = useTransform(scrollYProgress, [0, 0.08, 0.16], [1, 1, 0])
   const textY = useTransform(scrollYProgress, [0, 0.16], [0, -80])
 
-  const logoRotate = useTransform(scrollYProgress, [0, 0.32], [0, 720])
   const logoBottom = useTransform(scrollYProgress, [0, 0.15], ['8%', '42%'])
   const logoScale = useTransform(scrollYProgress, [0, 0.12, 0.22, 0.32], [1, 1.1, 0.8, 0.15])
   const logoOpacity = useTransform(scrollYProgress, [0.24, 0.32], [1, 0])
@@ -298,22 +293,16 @@ function DesktopHero() {
           className="absolute left-1/2 -translate-x-1/2 z-[5] pointer-events-none"
           style={{
             bottom: logoBottom,
-            rotate: logoRotate,
             scale: logoScale,
             opacity: logoOpacity,
             filter: logoFilter,
-            transformPerspective: 1200,
           }}
-          initial={{ opacity: 0, scale: 0, rotate: -180 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
           <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-56 lg:h-56">
-            <ReifyCard className="rounded-full w-full h-full">
-              <div className="p-8 sm:p-10 md:p-12 flex items-center justify-center h-full">
-                <GearBrainSVG />
-              </div>
-            </ReifyCard>
+            <img src="/logo.png" alt="Finmark" className="w-full h-full object-contain" />
           </div>
         </motion.div>
 
