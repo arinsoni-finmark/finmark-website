@@ -95,10 +95,10 @@ export default function HowItWorks() {
             <>
               <GlowBadge>How It Works</GlowBadge>
               <h2 className="mt-5 font-display text-4xl font-bold text-white tracking-tight">
-                Three Steps to <span className="gradient-text">Automation</span>
+                Three Steps to <span className="gradient-text">Intelligent Automation</span>
               </h2>
               <p className="mt-5 max-w-2xl mx-auto text-lg text-gray-400">
-                Get up and running in minutes, not months.
+                Get up and running in minutes—no complexity, no disruption.
               </p>
             </>
           ) : (
@@ -117,7 +117,7 @@ export default function HowItWorks() {
                 transition={{ delay: 0.1, duration: 0.6 }}
                 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
               >
-                Three Steps to <span className="gradient-text">Automation</span>
+                Three Steps to <span className="gradient-text">Intelligent Automation</span>
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -126,7 +126,7 @@ export default function HowItWorks() {
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="mt-5 max-w-2xl mx-auto text-lg text-gray-400"
               >
-                Get up and running in minutes, not months.
+                Get up and running in minutes—no complexity, no disruption.
               </motion.p>
             </>
           )}

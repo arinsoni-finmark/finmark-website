@@ -48,21 +48,21 @@ export const FEATURES = [
 export const HOW_IT_WORKS = [
   {
     step: '01',
-    title: 'Connect Your Data',
+    title: 'Connect Your Systems',
     description:
-      'Integrate with your existing banking, accounting, and payment systems in minutes.',
+      'Integrate your existing tools across finance, operations, marketing, and more. FinMark.ai brings all your data into one unified platform—no silos, no friction.',
   },
   {
     step: '02',
-    title: 'AI Processes & Learns',
+    title: 'Automate Your Workflows',
     description:
-      'Our models analyze your financial data, identify patterns, detect anomalies, and build a custom intelligence layer for your business.',
+      'Design and deploy intelligent workflows tailored to your business. From financial processes to operational tasks and marketing activities, automate everything with precision.',
   },
   {
     step: '03',
-    title: 'Automate & Scale',
+    title: 'Gain Insights & Scale',
     description:
-      'Deploy automated workflows for compliance, reporting, and forecasting.',
+      'Unlock real-time insights, monitor performance, and make data-driven decisions. As your business grows, FinMark.ai scales with you—ensuring efficiency at every stage.',
   },
 ]
 
