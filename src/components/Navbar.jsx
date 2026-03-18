@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { NAV_LINKS } from '../lib/constants'
 import GradientButton from './ui/GradientButton'
-import LogoIcon from './ui/LogoIcon'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -37,9 +36,8 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5">
-            <LogoIcon size={32} />
-            <span className="font-display text-xl font-bold text-white">Finmark</span>
+          <a href="#" className="flex items-center">
+            <img src="/logo-full.png" alt="Finmark" className="h-8 w-auto" />
           </a>
 
           {/* Desktop nav */}

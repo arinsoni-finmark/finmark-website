@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
-import LogoIcon from './ui/LogoIcon'
 
 const SECTION_LINKS = [
   { label: 'Features', href: '#features' },
@@ -25,9 +24,8 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center gap-2.5 mb-4">
-              <LogoIcon size={32} variant="subtle" />
-              <span className="font-display text-xl font-bold text-white">Finmark</span>
+            <div className="flex items-center mb-4">
+              <img src="/logo-full.png" alt="Finmark" className="h-8 w-auto" />
             </div>
             <p className="text-sm text-gray-500 max-w-xs leading-relaxed">
               AI-powered financial automation for the modern enterprise.

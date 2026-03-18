@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import LogoIcon from './ui/LogoIcon'
 import useIsMobile from '../lib/useIsMobile'
 
 const LOADING_MESSAGES = [
@@ -78,11 +77,7 @@ export default function PageLoader({ onComplete }) {
 
           <div className="relative text-center">
             <div className="mx-auto">
-              <LogoIcon size={isMobile ? 56 : 72} variant="dynamic" />
-            </div>
-
-            <div className="mt-8 font-display text-4xl font-bold text-white">
-              Finmark
+              <img src="/logo-full.png" alt="Finmark" className="h-12 sm:h-16 w-auto mx-auto" />
             </div>
 
             <div className="mt-6 h-6 overflow-hidden">
