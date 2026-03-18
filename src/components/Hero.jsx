@@ -117,40 +117,40 @@ function InteractiveGradient() {
 /* ─── Simple mobile hero — no scroll animations ─── */
 function MobileHero() {
   return (
-    <section className="relative min-h-screen px-4 pt-28 pb-16 overflow-hidden">
+    <section className="relative min-h-screen px-4 pt-20 pb-12 overflow-hidden">
       {/* Simple background */}
       <div className="absolute inset-0 bg-grid opacity-20" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,transparent_0%,var(--color-dark)_100%)]" />
       <div className="absolute inset-0 bg-gradient-to-b from-electric/5 via-transparent to-purple/5" />
 
       <div className="relative z-10 text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-6 py-2.5 text-sm font-medium text-electric-light mb-8">
-          <Sparkles size={14} />
+        <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 text-xs font-medium text-electric-light mb-6">
+          <Sparkles size={12} />
           AI-Powered Financial Infrastructure
         </span>
 
-        <h1 className="font-display text-[2.8rem] font-bold leading-[0.9] text-white tracking-[-0.03em] max-w-5xl mx-auto">
+        <h1 className="font-display text-[2rem] font-bold leading-[0.95] text-white tracking-[-0.03em] max-w-5xl mx-auto">
           The Future of
           <br />
           <span className="gradient-text">Financial</span>{' '}
           <TypewriterCycle words={['Automation', 'Intelligence', 'Analytics', 'Compliance']} />
         </h1>
 
-        <p className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 leading-relaxed">
+        <p className="mt-5 max-w-2xl mx-auto text-base text-gray-400 leading-relaxed">
           Automate compliance, predict cash flows, detect fraud — all at scale.
         </p>
 
-        <div className="mt-10 flex flex-col items-center gap-5">
-          <GradientButton className="text-base px-10 py-4 flex items-center gap-2">
-            Get Started Free <ArrowRight size={18} />
+        <div className="mt-6 flex flex-col items-center gap-3">
+          <GradientButton className="text-sm px-7 py-3 flex items-center gap-2">
+            Get Started Free <ArrowRight size={16} />
           </GradientButton>
-          <GradientButton variant="outline" className="text-base px-10 py-4">
+          <GradientButton variant="outline" className="text-sm px-7 py-3">
             Watch Demo
           </GradientButton>
         </div>
 
         {/* Logo */}
-        <div className="mt-16 mx-auto w-[240px] opacity-20">
+        <div className="mt-10 mx-auto w-[180px] opacity-20">
           <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
         </div>
 
@@ -242,7 +242,7 @@ function DesktopHero() {
 
         {/* TEXT */}
         <motion.div
-          className="absolute top-0 left-0 right-0 pt-28 sm:pt-36 px-4 text-center z-20"
+          className="absolute top-0 left-0 right-0 pt-20 sm:pt-28 md:pt-36 px-4 text-center z-20"
           style={{ opacity: textOpacity, y: textY }}
         >
           <motion.div
@@ -250,13 +250,13 @@ function DesktopHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-6 py-2.5 text-sm font-medium text-electric-light mb-8 backdrop-blur-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-medium text-electric-light mb-6 sm:mb-8 backdrop-blur-sm">
               <Sparkles size={14} />
               AI-Powered Financial Infrastructure
             </span>
           </motion.div>
 
-          <h1 className="font-display text-[2.8rem] sm:text-[4rem] md:text-[5rem] lg:text-[6.5rem] font-bold leading-[0.9] text-white tracking-[-0.03em] max-w-5xl mx-auto">
+          <h1 className="font-display text-[2rem] sm:text-[3rem] md:text-[4rem] lg:text-[5.5rem] font-bold leading-[0.9] text-white tracking-[-0.03em] max-w-5xl mx-auto">
             <AnimatedWords delay={0.4}>The Future of</AnimatedWords>
             <br />
             <span className="gradient-text">
@@ -269,7 +269,7 @@ function DesktopHero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed"
+            className="mt-5 sm:mt-8 max-w-2xl mx-auto text-base md:text-lg text-gray-400 leading-relaxed"
           >
             Automate compliance, predict cash flows, detect fraud — all at scale.
           </motion.p>
@@ -278,12 +278,12 @@ function DesktopHero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4 }}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-5"
+            className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5"
           >
-            <GradientButton className="text-base px-10 py-4 flex items-center gap-2">
-              Get Started Free <ArrowRight size={18} />
+            <GradientButton className="text-sm sm:text-base px-7 py-3 sm:px-10 sm:py-4 flex items-center gap-2">
+              Get Started Free <ArrowRight size={16} />
             </GradientButton>
-            <GradientButton variant="outline" className="text-base px-10 py-4">
+            <GradientButton variant="outline" className="text-sm sm:text-base px-7 py-3 sm:px-10 sm:py-4">
               Watch Demo
             </GradientButton>
           </motion.div>
@@ -303,7 +303,7 @@ function DesktopHero() {
           animate={{ opacity: 0.15, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.5, type: 'spring', stiffness: 50, damping: 14 }}
         >
-          <div className="w-[280px] sm:w-[360px] md:w-[420px] lg:w-[500px]">
+          <div className="w-[200px] sm:w-[280px] md:w-[340px] lg:w-[420px]">
             <img src="/logo-full.png" alt="Finmark" className="w-full h-auto object-contain" />
           </div>
         </motion.div>
