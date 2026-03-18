@@ -71,36 +71,37 @@ export const SERVICES = [
     icon: CreditCard,
     title: 'Payment Processing',
     description:
-      'AI-optimized payment routing with fraud prevention and multi-currency support.',
+      'Optimize and automate payment flows with intelligent routing, multi-currency support, and built-in fraud prevention for seamless global transactions.',
   },
   {
     icon: ShieldCheck,
     title: 'Regulatory Compliance',
-    description: 'Automated KYC/AML checks with real-time regulatory updates.',
+    description:
+      'Stay compliant with automated KYC/AML checks, real-time regulatory updates, and audit-ready systems designed for modern businesses.',
   },
   {
     icon: AlertTriangle,
     title: 'Risk Management',
     description:
-      'Predictive risk models that identify threats before they materialize.',
+      'Proactively identify and mitigate risks using predictive analytics and AI-driven models that safeguard your financial and operational processes.',
   },
   {
     icon: BarChart3,
     title: 'Financial Reporting',
     description:
-      'AI-generated reports with natural language insights and custom visualizations.',
+      'Generate accurate, real-time reports with AI-powered insights, enabling better forecasting, analysis, and strategic decision-making.',
   },
   {
     icon: Search,
     title: 'Fraud Detection',
     description:
-      'Real-time anomaly detection powered by deep learning neural networks.',
+      'Detect anomalies and prevent fraud in real-time with advanced machine learning models that continuously learn and adapt.',
   },
   {
     icon: Database,
     title: 'Data Integration',
     description:
-      'Unified data layer connecting your banking and financial platforms.',
+      'Unify your data across systems with seamless integrations, creating a single source of truth for finance and operations.',
   },
 ]
 

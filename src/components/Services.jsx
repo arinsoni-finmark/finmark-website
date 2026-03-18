@@ -105,11 +105,10 @@ export default function Services() {
             <>
               <GlowBadge>Services</GlowBadge>
               <h2 className="mt-5 font-display text-4xl font-bold text-white tracking-tight">
-                End-to-End <span className="gradient-text">Financial</span> Solutions
+                End-to-End Financial & <span className="gradient-text">Operational</span> Solutions
               </h2>
               <p className="mt-5 max-w-2xl mx-auto text-lg text-gray-400">
-                From payment processing to fraud detection, we cover every aspect of
-                modern financial operations.
+                From financial workflows to operational efficiency, FinMark.ai delivers intelligent services that help businesses automate, optimize, and scale with confidence.
               </p>
             </>
           ) : (
@@ -128,7 +127,7 @@ export default function Services() {
                 transition={{ delay: 0.1, duration: 0.6 }}
                 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
               >
-                End-to-End <span className="gradient-text">Financial</span> Solutions
+                End-to-End Financial & <span className="gradient-text">Operational</span> Solutions
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -137,8 +136,7 @@ export default function Services() {
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="mt-5 max-w-2xl mx-auto text-lg text-gray-400"
               >
-                From payment processing to fraud detection, we cover every aspect of
-                modern financial operations.
+                From financial workflows to operational efficiency, FinMark.ai delivers intelligent services that help businesses automate, optimize, and scale with confidence.
               </motion.p>
             </>
           )}
