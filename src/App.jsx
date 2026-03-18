@@ -13,6 +13,7 @@ import Services from './components/Services'
 import Stats from './components/Stats'
 import Testimonials from './components/Testimonials'
 import CTA from './components/CTA'
+import About from './components/About'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -67,6 +68,7 @@ export default function App() {
         <Stats />
         <Testimonials />
         <CTA />
+        <About />
         <Footer />
       </div>
     </>
