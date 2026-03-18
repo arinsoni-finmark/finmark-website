@@ -132,12 +132,12 @@ function MobileHero() {
         <h1 className="font-display text-[2rem] font-bold leading-[0.95] text-white tracking-[-0.03em] max-w-5xl mx-auto">
           The Future of
           <br />
-          <span className="gradient-text">Financial</span>{' '}
+          <span className="gradient-text">Financial and Operational</span>{' '}
           <TypewriterCycle words={['Automation', 'Intelligence', 'Analytics', 'Compliance']} />
         </h1>
 
         <p className="mt-5 max-w-2xl mx-auto text-base text-gray-400 leading-relaxed">
-          Automate compliance, predict cash flows, detect fraud — all at scale.
+          Automate what slows you down.
         </p>
 
         <div className="mt-6 flex flex-col items-center gap-3">
@@ -260,7 +260,7 @@ function DesktopHero() {
             <AnimatedWords delay={0.4}>The Future of</AnimatedWords>
             <br />
             <span className="gradient-text">
-              <AnimatedWords delay={0.7}>Financial</AnimatedWords>
+              <AnimatedWords delay={0.7}>Financial and Operational</AnimatedWords>
             </span>{' '}
             <TypewriterCycle words={['Automation', 'Intelligence', 'Analytics', 'Compliance']} />
           </h1>
@@ -271,7 +271,8 @@ function DesktopHero() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="mt-5 sm:mt-8 max-w-2xl mx-auto text-base md:text-lg text-gray-400 leading-relaxed"
           >
-            Automate compliance, predict cash flows, detect fraud — all at scale.
+            Automate what slows you down.
+
           </motion.p>
 
           <motion.div
