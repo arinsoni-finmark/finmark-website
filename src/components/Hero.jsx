@@ -133,7 +133,7 @@ function MobileHero() {
           The Future of
           <br />
           <span className="gradient-text">Financial and Operational</span>{' '}
-          <TypewriterCycle words={['Automation', 'Intelligence', 'Analytics', 'Compliance']} />
+          Automation
         </h1>
 
         <p className="mt-5 max-w-2xl mx-auto text-base text-gray-400 leading-relaxed">
@@ -262,7 +262,7 @@ function DesktopHero() {
             <span className="gradient-text">
               <AnimatedWords delay={0.7}>Financial and Operational</AnimatedWords>
             </span>{' '}
-            <TypewriterCycle words={['Automation', 'Intelligence', 'Analytics', 'Compliance']} />
+            Automation
           </h1>
 
           <motion.p
@@ -272,7 +272,6 @@ function DesktopHero() {
             className="mt-5 sm:mt-8 max-w-2xl mx-auto text-base md:text-lg text-gray-400 leading-relaxed"
           >
             Automate what slows you down.
-
           </motion.p>
 
           <motion.div
