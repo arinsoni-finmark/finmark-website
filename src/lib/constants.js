@@ -15,6 +15,7 @@ export const NAV_LINKS = [
   { label: 'Features', href: '#features' },
   { label: 'How It Works', href: '#how-it-works' },
   { label: 'Services', href: '#services' },
+  { label: 'About Us', href: '#about' },
 ]
 
 export const FEATURES = [
