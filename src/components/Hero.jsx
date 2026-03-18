@@ -4,7 +4,6 @@ import { ArrowRight, Sparkles, Brain, Shield, TrendingUp } from 'lucide-react'
 import GradientButton from './ui/GradientButton'
 import ReifyCard from './ui/ReifyCard'
 import FloatingElement from './ui/FloatingElement'
-import TypewriterCycle from './ui/TypewriterCycle'
 import useIsMobile from '../lib/useIsMobile'
 
 const HeroScene = lazy(() => import('./3d/HeroScene'))
