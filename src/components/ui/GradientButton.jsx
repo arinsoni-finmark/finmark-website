@@ -34,7 +34,7 @@ export default function GradientButton({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         whileTap={{ scale: 0.97 }}
-        className={`relative inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-medium text-white transition-all duration-300 hover:border-electric/50 hover:bg-white/10 hover:shadow-lg hover:shadow-electric/10 cursor-pointer overflow-hidden ${className}`}
+        className={`relative inline-flex items-center justify-center rounded-xl border border-white/10 bg-dark-card/90 px-6 py-3 font-medium text-white transition-all duration-300 hover:border-electric/50 hover:bg-white/10 hover:shadow-lg hover:shadow-electric/10 cursor-pointer overflow-hidden ${className}`}
         {...props}
       >
         {/* Scanning beam on hover */}
