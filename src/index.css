@@ -90,6 +90,13 @@
     animation: marquee-reverse 30s linear infinite;
   }
 
+  /* For a track rendered as THREE copies of its content. Shifting by one
+     copy (-33.333%) is what makes the loop seamless — using the 2-copy
+     -50% here lands mid-copy and the ticker visibly snaps. */
+  .animate-marquee-3 {
+    animation: marquee-3 30s linear infinite;
+  }
+
   /* Noise texture overlay */
   .noise-overlay::after {
     content: '';
@@ -130,6 +137,11 @@
 @keyframes marquee-reverse {
   0% { transform: translateX(-50%); }
   100% { transform: translateX(0); }
+}
+
+@keyframes marquee-3 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.3333%); }
 }
 
 @keyframes float {

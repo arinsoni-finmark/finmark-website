@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import { motion, useScroll, useSpring } from 'framer-motion'
@@ -14,6 +14,7 @@ export default function App() {
     restDelta: 0.001,
   })
   const location = useLocation()
+  const lenisRef = useRef(null)
 
   useEffect(() => {
     // Disable Lenis on mobile/touch devices — it fights native scrolling and causes lag
@@ -27,18 +28,33 @@ export default function App() {
       smoothWheel: true,
     })
 
+    // Track the handle so cleanup can actually stop the loop. Without this
+    // the callback kept firing against a destroyed Lenis instance forever,
+    // and every StrictMode double-mount or HMR update stacked another loop.
+    let frame
     function raf(time) {
       lenis.raf(time)
-      requestAnimationFrame(raf)
+      frame = requestAnimationFrame(raf)
     }
-    requestAnimationFrame(raf)
+    frame = requestAnimationFrame(raf)
 
-    return () => lenis.destroy()
+    lenisRef.current = lenis
+    return () => {
+      cancelAnimationFrame(frame)
+      lenis.destroy()
+      lenisRef.current = null
+    }
   }, [])
 
-  // Scroll to top on route change so each new page starts at the top
+  // Scroll to top on route change so each new page starts at the top.
+  // Go through Lenis when it owns the scroll, otherwise its internal
+  // position desyncs from the real one and the next wheel event jumps back.
   useEffect(() => {
-    window.scrollTo(0, 0)
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true })
+    } else {
+      window.scrollTo(0, 0)
+    }
   }, [location.pathname])
 
   return (

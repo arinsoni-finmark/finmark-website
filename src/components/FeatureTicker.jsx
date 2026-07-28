@@ -28,7 +28,9 @@ export default function FeatureTicker() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
 
-  const doubled = [...KEYWORDS, ...KEYWORDS, ...KEYWORDS]
+  // Three copies so the track stays wider than any viewport. The animation
+  // shifts by exactly one copy — see .animate-marquee-3.
+  const tripled = [...KEYWORDS, ...KEYWORDS, ...KEYWORDS]
 
   return (
     <motion.section
@@ -44,8 +46,8 @@ export default function FeatureTicker() {
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-electric/[0.02] to-transparent" />
 
       {/* Scrolling ticker */}
-      <div className="flex animate-marquee whitespace-nowrap items-center">
-        {doubled.map((keyword, i) => (
+      <div className="flex animate-marquee-3 whitespace-nowrap items-center">
+        {tripled.map((keyword, i) => (
           <span key={i} className="flex items-center">
             <span className="text-sm font-display font-medium text-gray-500 tracking-wide uppercase select-none flex-shrink-0">
               {keyword}

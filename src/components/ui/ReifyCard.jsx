@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import useIsMobile from '../../lib/useIsMobile'
 
 /**
  * Reify-style premium 3D card.
@@ -7,11 +8,6 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
  * Uses CSS custom properties for the shine + border glow (performant, reliable)
  * and framer-motion spring physics for the 3D tilt only.
  */
-function useIsMobile() {
-  if (typeof window === 'undefined') return false
-  return window.innerWidth < 768
-}
-
 export default function ReifyCard({ children, className = '' }) {
   const ref = useRef(null)
   const [hovered, setHovered] = useState(false)

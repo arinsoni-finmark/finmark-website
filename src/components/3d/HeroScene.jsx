@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { AdaptiveDpr, AdaptiveEvents } from '@react-three/drei'
 import * as THREE from 'three'
@@ -99,7 +99,7 @@ function OrbitalParticles() {
   const ref = useRef()
   const count = 1500
 
-  const { positions, colors, speeds } = useMemo(() => {
+  const { positions, origins, colors, speeds } = useMemo(() => {
     const pos = new Float32Array(count * 3)
     const col = new Float32Array(count * 3)
     const spd = new Float32Array(count)
@@ -125,7 +125,9 @@ function OrbitalParticles() {
 
       spd[i] = 0.2 + Math.random() * 0.5
     }
-    return { positions: pos, colors: col, speeds: spd }
+    // Keep a pristine copy — the orbit below is computed from these, never
+    // from the previous frame, so nothing accumulates.
+    return { positions: pos, origins: new Float32Array(pos), colors: col, speeds: spd }
   }, [])
 
   useFrame(({ clock }) => {
@@ -134,19 +136,22 @@ function OrbitalParticles() {
     const t = clock.getElapsedTime()
 
     for (let i = 0; i < count; i++) {
-      const x = pos[i * 3]
-      const y = pos[i * 3 + 1]
-      const z = pos[i * 3 + 2]
+      const ox = origins[i * 3]
+      const oz = origins[i * 3 + 2]
 
-      // Orbit around Y axis
-      const angle = speeds[i] * t * 0.1
+      // Orbit around Y axis. This is an ABSOLUTE angle for the current time
+      // applied to the particle's starting position — not a per-frame nudge
+      // to wherever it already was. Rotating the live buffer by `speed * t`
+      // every frame compounded the angle, so the spin accelerated until the
+      // field strobed after ~a minute, and ran twice as fast on a 120Hz
+      // display. Deriving from `origins` also stops float error from
+      // gradually eating each particle's orbital radius.
+      const angle = speeds[i] * t * 0.2
       const cos = Math.cos(angle)
       const sin = Math.sin(angle)
-      const nx = x * cos - z * sin
-      const nz = x * sin + z * cos
 
-      pos[i * 3] = nx
-      pos[i * 3 + 2] = nz
+      pos[i * 3] = ox * cos - oz * sin
+      pos[i * 3 + 2] = ox * sin + oz * cos
     }
 
     ref.current.geometry.attributes.position.needsUpdate = true
@@ -331,10 +336,49 @@ function StarField() {
   )
 }
 
+/**
+ * Only render frames while the canvas is actually on screen and the tab is
+ * in the foreground. Previously this kept displacing 2,160 vertices and
+ * recomputing normals at 60fps for the entire life of the homepage, long
+ * after the visitor had scrolled past the hero — pure battery burn.
+ */
+function useIsVisible(ref) {
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    let onScreen = true
+    const sync = () => setVisible(onScreen && !document.hidden)
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting
+        sync()
+      },
+      { threshold: 0 },
+    )
+    io.observe(el)
+    document.addEventListener('visibilitychange', sync)
+
+    return () => {
+      io.disconnect()
+      document.removeEventListener('visibilitychange', sync)
+    }
+  }, [ref])
+
+  return visible
+}
+
 export default function HeroScene() {
+  const containerRef = useRef(null)
+  const visible = useIsVisible(containerRef)
+
   return (
-    <div className="absolute inset-0">
+    <div ref={containerRef} className="absolute inset-0">
       <Canvas
+        frameloop={visible ? 'always' : 'never'}
         camera={{ position: [0, 0, 8], fov: 42 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
