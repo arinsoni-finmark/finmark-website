@@ -112,11 +112,9 @@ export default function About({ headingTag: Heading = 'h2' }) {
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8">
               If you run ERP at an enterprise and any of what you just read sounds like your finance team's life, we would like to meet them.
             </p>
-            <Link to="/demo">
-              <GradientButton className="text-sm sm:text-base px-9 py-4 flex items-center gap-2 mx-auto">
-                Book a 30-minute walkthrough <ArrowRight size={16} />
-              </GradientButton>
-            </Link>
+            <GradientButton to="/demo" className="text-sm sm:text-base px-9 py-4 flex items-center gap-2 mx-auto">
+              Book a 30-minute walkthrough <ArrowRight size={16} />
+            </GradientButton>
           </div>
         </Wrapper>
       </div>

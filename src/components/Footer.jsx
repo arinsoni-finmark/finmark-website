@@ -1,6 +1,7 @@
+import { useState, useId } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Send } from 'lucide-react'
+import { Send, Check } from 'lucide-react'
 import { PRODUCTS } from '../lib/constants'
 
 const COMPANY_LINKS = [
@@ -8,6 +9,103 @@ const COMPANY_LINKS = [
   { label: 'Contact', to: '/contact' },
   { label: 'Get a demo', to: '/demo' },
 ]
+
+/**
+ * Posts to the Netlify "newsletter" form declared in index.html.
+ * Same contract as the demo/contact forms: only claim success when Netlify
+ * actually accepted it, since fetch resolves happily on a 404 or 500.
+ */
+function NewsletterSignup() {
+  const emailId = useId()
+  const [email, setEmail] = useState('')
+  const [botField, setBotField] = useState('')
+  const [status, setStatus] = useState('idle')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (status === 'sending') return
+
+    const body = new URLSearchParams({
+      'form-name': 'newsletter',
+      'bot-field': botField,
+      email,
+    })
+
+    setStatus('sending')
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      })
+      if (!res.ok) throw new Error(`Netlify form POST returned ${res.status}`)
+      setStatus('sent')
+      setEmail('')
+    } catch (err) {
+      console.error('Newsletter signup failed:', err)
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div className="mt-6">
+      <label htmlFor={emailId} className="block text-sm text-gray-400 mb-2">
+        Stay updated
+      </label>
+
+      {status === 'sent' ? (
+        <p className="flex items-center gap-2 text-sm text-electric-light">
+          <Check size={16} />
+          You&apos;re on the list.
+        </p>
+      ) : (
+        <form onSubmit={handleSubmit} className="max-w-xs">
+          <p className="hidden">
+            <label>
+              Leave this field empty
+              <input
+                name="bot-field"
+                tabIndex={-1}
+                autoComplete="off"
+                value={botField}
+                onChange={(e) => setBotField(e.target.value)}
+              />
+            </label>
+          </p>
+          <div className="flex">
+            <input
+              id={emailId}
+              type="email"
+              name="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@company.com"
+              className="flex-1 min-w-0 rounded-l-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder-gray-500 outline-none focus:border-electric/50 transition-colors"
+            />
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              aria-label="Subscribe"
+              className="rounded-r-lg bg-gradient-to-r from-electric to-purple px-4 py-2 text-white hover:opacity-90 transition-all hover:shadow-lg hover:shadow-electric/20 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              <Send size={16} />
+            </button>
+          </div>
+          {status === 'error' && (
+            <p role="alert" className="mt-2 text-xs text-red-300">
+              That didn&apos;t go through. Try again, or email{' '}
+              <a href="mailto:admin@finmark.ai" className="underline hover:text-white">
+                admin@finmark.ai
+              </a>
+              .
+            </p>
+          )}
+        </form>
+      )}
+    </div>
+  )
+}
 
 export default function Footer() {
   return (
@@ -36,19 +134,7 @@ export default function Footer() {
             </p>
 
             {/* Newsletter */}
-            <div className="mt-6">
-              <p className="text-sm text-gray-400 mb-2">Stay updated</p>
-              <div className="flex max-w-xs">
-                <input
-                  type="email"
-                  placeholder="you@company.com"
-                  className="flex-1 rounded-l-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder-gray-500 outline-none focus:border-electric/50 transition-colors"
-                />
-                <button className="rounded-r-lg bg-gradient-to-r from-electric to-purple px-4 py-2 text-white hover:opacity-90 transition-all hover:shadow-lg hover:shadow-electric/20 cursor-pointer">
-                  <Send size={16} />
-                </button>
-              </div>
-            </div>
+            <NewsletterSignup />
           </motion.div>
 
           {/* Platform */}

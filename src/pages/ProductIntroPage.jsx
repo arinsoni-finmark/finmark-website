@@ -3,11 +3,18 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import SEO from '../components/seo/SEO'
 import Breadcrumb from '../components/seo/Breadcrumb'
+import PillarFAQ from '../components/seo/PillarFAQ'
 import GlowBadge from '../components/ui/GlowBadge'
 import GradientButton from '../components/ui/GradientButton'
 import { PRODUCTS } from '../lib/constants'
 import { getClustersForPillar } from '../content/clusters'
-import { organizationSchema, webPageSchema, breadcrumbSchema } from '../lib/schema'
+import { getPillarBySlug } from '../content/pillars'
+import {
+  organizationSchema,
+  webPageSchema,
+  breadcrumbSchema,
+  faqSchema,
+} from '../lib/schema'
 
 /**
  * Simple product intro page — consistent template for products that
@@ -44,6 +51,11 @@ export default function ProductIntroPage({ slug }) {
   // this page acts as the hub that links down to each guide.
   const guides = getClustersForPillar(product.slug)
 
+  // A product slug can double as a pillar slug (accounts-payable-automation
+  // does). Where it does, the pillar's FAQs belong on this page — they answer
+  // buying objections and earn the FAQ rich result.
+  const faqs = getPillarBySlug(product.slug)?.faqs ?? []
+
   return (
     <>
       <SEO
@@ -58,6 +70,7 @@ export default function ProductIntroPage({ slug }) {
             path,
           }),
           breadcrumbSchema(breadcrumbItems),
+          faqSchema(faqs),
         ]}
       />
 
@@ -115,14 +128,22 @@ export default function ProductIntroPage({ slug }) {
             transition={{ duration: 0.6, delay: 0.35 }}
             className="mt-12 text-center"
           >
-            <Link to={`/demo?product=${product.slug}`}>
-              <GradientButton className="text-sm sm:text-base px-9 py-4 flex items-center gap-2 mx-auto">
-                Get a demo <ArrowRight size={16} />
-              </GradientButton>
-            </Link>
+            <GradientButton
+              to={`/demo?product=${product.slug}`}
+              className="text-sm sm:text-base px-9 py-4 flex items-center gap-2 mx-auto"
+            >
+              Get a demo <ArrowRight size={16} />
+            </GradientButton>
           </motion.div>
         </div>
       </section>
+
+      {/* FAQs — objection handling next to the CTA, and the FAQPage rich result */}
+      {faqs.length > 0 && (
+        <div className="border-t border-white/5">
+          <PillarFAQ faqs={faqs} />
+        </div>
+      )}
 
       {/* In-depth guides — internal link hub down to the cluster pages */}
       {guides.length > 0 && (
