@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect } from 'react'
+import { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { AdaptiveDpr, AdaptiveEvents } from '@react-three/drei'
 import * as THREE from 'three'
@@ -336,49 +336,16 @@ function StarField() {
   )
 }
 
-/**
- * Only render frames while the canvas is actually on screen and the tab is
- * in the foreground. Previously this kept displacing 2,160 vertices and
- * recomputing normals at 60fps for the entire life of the homepage, long
- * after the visitor had scrolled past the hero — pure battery burn.
- */
-function useIsVisible(ref) {
-  const [visible, setVisible] = useState(true)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    let onScreen = true
-    const sync = () => setVisible(onScreen && !document.hidden)
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        onScreen = entry.isIntersecting
-        sync()
-      },
-      { threshold: 0 },
-    )
-    io.observe(el)
-    document.addEventListener('visibilitychange', sync)
-
-    return () => {
-      io.disconnect()
-      document.removeEventListener('visibilitychange', sync)
-    }
-  }, [ref])
-
-  return visible
-}
-
+// TODO: this canvas keeps displacing 2,160 vertices and recomputing normals at
+// 60fps for the entire life of the homepage, long after the visitor has
+// scrolled past the hero. Gating Canvas `frameloop` on an IntersectionObserver
+// plus document.hidden fixes it, but that could not be verified in a headless
+// browser (it reports itself as a background tab, so the scene never renders
+// at all) and a blank hero is worse than a warm battery. Needs a real desktop.
 export default function HeroScene() {
-  const containerRef = useRef(null)
-  const visible = useIsVisible(containerRef)
-
   return (
-    <div ref={containerRef} className="absolute inset-0">
+    <div className="absolute inset-0">
       <Canvas
-        frameloop={visible ? 'always' : 'never'}
         camera={{ position: [0, 0, 8], fov: 42 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
