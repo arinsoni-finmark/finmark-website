@@ -45,17 +45,21 @@ const PRODUCT_PARAM_MAP = {
 
 export default function DemoPage() {
   const [searchParams] = useSearchParams()
-  const [submitted, setSubmitted] = useState(false)
+  // idle → sending → sent | error. We only ever show the thank-you card on
+  // 'sent', i.e. after Netlify has actually accepted the submission.
+  const [status, setStatus] = useState('idle')
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [selected, setSelected] = useState({})
+  const [botField, setBotField] = useState('')
 
   const productParam = searchParams.get('product')
 
   // Reset form when URL changes (e.g., navigating from AP demo → "& many more")
   useEffect(() => {
-    setSubmitted(false)
+    setStatus('idle')
     setForm({ name: '', email: '', message: '' })
     setSelected({})
+    setBotField('')
   }, [productParam])
 
   // Three modes:
@@ -80,8 +84,10 @@ export default function DemoPage() {
     setSelected((prev) => ({ ...prev, [id]: !prev[id] }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    if (status === 'sending') return
+
     const selectedProducts = lockedProduct
       ? lockedProduct
       : isCustom
@@ -94,19 +100,29 @@ export default function DemoPage() {
 
     const formData = new URLSearchParams({
       'form-name': 'demo',
+      'bot-field': botField,
       subject,
       name: form.name,
       email: form.email,
       products: selectedProducts || 'None selected',
       message: form.message,
     })
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString(),
-    })
-      .then(() => setSubmitted(true))
-      .catch(() => setSubmitted(true))
+
+    setStatus('sending')
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString(),
+      })
+      // fetch only rejects on a network failure — a 404 or 500 still resolves.
+      // Without this check a dropped lead would look identical to a delivered one.
+      if (!res.ok) throw new Error(`Netlify form POST returned ${res.status}`)
+      setStatus('sent')
+    } catch (err) {
+      console.error('Demo form submission failed:', err)
+      setStatus('error')
+    }
   }
 
   return (
@@ -167,7 +183,7 @@ export default function DemoPage() {
 
           <ReifyCard className="rounded-2xl max-w-lg mx-auto">
             <div className="p-8">
-              {submitted ? (
+              {status === 'sent' ? (
                 <div className="text-center py-12">
                   <div className="mx-auto w-14 h-14 rounded-full bg-gradient-to-br from-electric to-purple flex items-center justify-center mb-5">
                     <Check size={28} className="text-white" />
@@ -181,6 +197,37 @@ export default function DemoPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Netlify honeypot — invisible to people, bots fill it in and
+                      Netlify silently discards those submissions. */}
+                  <p className="hidden">
+                    <label>
+                      Leave this field empty
+                      <input
+                        name="bot-field"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={botField}
+                        onChange={(e) => setBotField(e.target.value)}
+                      />
+                    </label>
+                  </p>
+
+                  {status === 'error' && (
+                    <div
+                      role="alert"
+                      className="rounded-xl border border-red-500/30 bg-red-500/[0.08] px-4 py-3 text-sm text-red-200"
+                    >
+                      That didn't send. Please try again, or email us directly at{' '}
+                      <a
+                        href="mailto:admin@finmark.ai"
+                        className="underline hover:text-white"
+                      >
+                        admin@finmark.ai
+                      </a>
+                      .
+                    </div>
+                  )}
+
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-2">
                       Name
@@ -257,8 +304,12 @@ export default function DemoPage() {
                       placeholder="Tell us more about what you need..."
                     />
                   </div>
-                  <GradientButton type="submit" className="w-full text-sm py-3 mt-2">
-                    Book a call
+                  <GradientButton
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="w-full text-sm py-3 mt-2"
+                  >
+                    {status === 'sending' ? 'Sending…' : 'Book a call'}
                   </GradientButton>
                 </form>
               )}

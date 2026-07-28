@@ -34,7 +34,7 @@ export default function GradientButton({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         whileTap={{ scale: 0.97 }}
-        className={`relative inline-flex items-center justify-center rounded-xl border border-white/10 bg-dark-card/90 px-6 py-3 font-medium text-white transition-all duration-300 hover:border-electric/50 hover:bg-white/10 hover:shadow-lg hover:shadow-electric/10 cursor-pointer overflow-hidden ${className}`}
+        className={`relative inline-flex items-center justify-center rounded-xl border border-white/10 bg-dark-card/90 px-6 py-3 font-medium text-white transition-all duration-300 hover:border-electric/50 hover:bg-white/10 hover:shadow-lg hover:shadow-electric/10 cursor-pointer overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
         {...props}
       >
         {/* Scanning beam on hover */}
@@ -56,7 +56,7 @@ export default function GradientButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       whileTap={{ scale: 0.97 }}
-      className={`group relative inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-electric to-purple px-6 py-3 font-semibold text-white shadow-lg shadow-electric/25 transition-all duration-300 hover:shadow-xl hover:shadow-electric/40 cursor-pointer overflow-hidden ${className}`}
+      className={`group relative inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-electric to-purple px-6 py-3 font-semibold text-white shadow-lg shadow-electric/25 transition-all duration-300 hover:shadow-xl hover:shadow-electric/40 cursor-pointer overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
       {...props}
     >
       {/* Animated shine sweep on hover */}
