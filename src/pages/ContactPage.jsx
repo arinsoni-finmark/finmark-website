@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Sparkles, Check } from 'lucide-react'
 import SEO from '../components/seo/SEO'
@@ -13,6 +13,7 @@ import {
 } from '../lib/schema'
 
 export default function ContactPage() {
+  const fieldId = useId()
   // idle → sending → sent | error. We only ever show the thank-you card on
   // 'sent', i.e. after Netlify has actually accepted the submission.
   const [status, setStatus] = useState('idle')
@@ -163,11 +164,12 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-2">
+                      <label htmlFor={`${fieldId}-name`} className="block text-xs font-medium text-gray-400 mb-2">
                         Name
                       </label>
                       <input
                         type="text"
+                        id={`${fieldId}-name`}
                         name="name"
                         required
                         value={form.name}
@@ -177,11 +179,12 @@ export default function ContactPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-2">
+                      <label htmlFor={`${fieldId}-email`} className="block text-xs font-medium text-gray-400 mb-2">
                         Email
                       </label>
                       <input
                         type="email"
+                        id={`${fieldId}-email`}
                         name="email"
                         required
                         value={form.email}
@@ -192,11 +195,12 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
+                    <label htmlFor={`${fieldId}-subject`} className="block text-xs font-medium text-gray-400 mb-2">
                       Subject
                     </label>
                     <input
                       type="text"
+                      id={`${fieldId}-subject`}
                       name="subject"
                       required
                       value={form.subject}
@@ -206,10 +210,11 @@ export default function ContactPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
+                    <label htmlFor={`${fieldId}-message`} className="block text-xs font-medium text-gray-400 mb-2">
                       Message
                     </label>
                     <textarea
+                      id={`${fieldId}-message`}
                       name="message"
                       rows={5}
                       required

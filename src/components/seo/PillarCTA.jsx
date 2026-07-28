@@ -31,11 +31,12 @@ export default function PillarCTA({
           </p>
         )}
         <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link to={primaryCta.href}>
-            <GradientButton className="text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 flex items-center gap-2">
-              {primaryCta.label} <ArrowRight size={16} />
-            </GradientButton>
-          </Link>
+          <GradientButton
+            to={primaryCta.href}
+            className="text-sm sm:text-base px-8 py-3 sm:px-10 sm:py-4 flex items-center gap-2"
+          >
+            {primaryCta.label} <ArrowRight size={16} />
+          </GradientButton>
           {secondaryCta && (
             <Link
               to={secondaryCta.href}

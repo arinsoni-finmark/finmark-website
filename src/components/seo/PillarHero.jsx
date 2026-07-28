@@ -61,11 +61,12 @@ export default function PillarHero({ badge, h1, subhead, primaryCta, secondaryCt
           className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           {primaryCta && (
-            <Link to={primaryCta.href}>
-              <GradientButton className="text-sm sm:text-base px-7 py-3 sm:px-9 sm:py-4 flex items-center gap-2">
-                {primaryCta.label} <ArrowRight size={16} />
-              </GradientButton>
-            </Link>
+            <GradientButton
+              to={primaryCta.href}
+              className="text-sm sm:text-base px-7 py-3 sm:px-9 sm:py-4 flex items-center gap-2"
+            >
+              {primaryCta.label} <ArrowRight size={16} />
+            </GradientButton>
           )}
           {secondaryCta && (
             <Link

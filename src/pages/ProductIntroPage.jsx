@@ -115,11 +115,12 @@ export default function ProductIntroPage({ slug }) {
             transition={{ duration: 0.6, delay: 0.35 }}
             className="mt-12 text-center"
           >
-            <Link to={`/demo?product=${product.slug}`}>
-              <GradientButton className="text-sm sm:text-base px-9 py-4 flex items-center gap-2 mx-auto">
-                Get a demo <ArrowRight size={16} />
-              </GradientButton>
-            </Link>
+            <GradientButton
+              to={`/demo?product=${product.slug}`}
+              className="text-sm sm:text-base px-9 py-4 flex items-center gap-2 mx-auto"
+            >
+              Get a demo <ArrowRight size={16} />
+            </GradientButton>
           </motion.div>
         </div>
       </section>

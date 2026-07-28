@@ -23,11 +23,9 @@ export default function NotFoundPage() {
             The page you're looking for doesn't exist or has moved. Try the homepage or
             browse the platform from the navigation above.
           </p>
-          <Link to="/">
-            <GradientButton className="text-sm sm:text-base px-8 py-3">
-              Back to homepage
-            </GradientButton>
-          </Link>
+          <GradientButton to="/" className="text-sm sm:text-base px-8 py-3">
+            Back to homepage
+          </GradientButton>
         </div>
       </section>
     </>

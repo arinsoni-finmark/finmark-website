@@ -65,11 +65,9 @@ export default function CTA() {
             </p>
 
             <div className="relative mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/demo">
-                <GradientButton className="text-base px-8 py-4 flex items-center gap-2">
-                  Get a demo <ArrowRight size={18} />
-                </GradientButton>
-              </Link>
+              <GradientButton to="/demo" className="text-base px-8 py-4 flex items-center gap-2">
+                Get a demo <ArrowRight size={18} />
+              </GradientButton>
             </div>
           </div>
         </ReifyCard>

@@ -185,9 +185,9 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <Link to="/demo">
-                <GradientButton className="text-sm px-5 py-2">Get a demo</GradientButton>
-              </Link>
+              <GradientButton to="/demo" className="text-sm px-5 py-2">
+                Get a demo
+              </GradientButton>
             </motion.div>
           </div>
 
@@ -264,9 +264,13 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-3">
-                <Link to="/demo" onClick={() => setMobileOpen(false)}>
-                  <GradientButton className="w-full text-sm">Get a demo</GradientButton>
-                </Link>
+                <GradientButton
+                  to="/demo"
+                  onClick={() => setMobileOpen(false)}
+                  className="w-full text-sm"
+                >
+                  Get a demo
+                </GradientButton>
               </div>
             </div>
           </motion.div>

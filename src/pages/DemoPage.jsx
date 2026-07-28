@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sparkles, Check } from 'lucide-react'
@@ -45,6 +45,7 @@ const PRODUCT_PARAM_MAP = {
 
 export default function DemoPage() {
   const [searchParams] = useSearchParams()
+  const fieldId = useId()
   // idle → sending → sent | error. We only ever show the thank-you card on
   // 'sent', i.e. after Netlify has actually accepted the submission.
   const [status, setStatus] = useState('idle')
@@ -229,11 +230,12 @@ export default function DemoPage() {
                   )}
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
+                    <label htmlFor={`${fieldId}-name`} className="block text-xs font-medium text-gray-400 mb-2">
                       Name
                     </label>
                     <input
                       type="text"
+                      id={`${fieldId}-name`}
                       name="name"
                       required
                       value={form.name}
@@ -243,11 +245,12 @@ export default function DemoPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
+                    <label htmlFor={`${fieldId}-email`} className="block text-xs font-medium text-gray-400 mb-2">
                       Email
                     </label>
                     <input
                       type="email"
+                      id={`${fieldId}-email`}
                       name="email"
                       required
                       value={form.email}
@@ -260,14 +263,16 @@ export default function DemoPage() {
                   {/* Product selection — only shown on /demo (no product param) or /demo?product=custom */}
                   {showCheckboxes && (
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-3">
+                      <span id={`${fieldId}-products`} className="block text-xs font-medium text-gray-400 mb-3">
                         What are you interested in?
-                      </label>
-                      <div className="space-y-2">
+                      </span>
+                      <div role="group" aria-labelledby={`${fieldId}-products`} className="space-y-2">
                         {PRODUCT_OPTIONS.map((product) => (
                           <button
                             key={product.id}
                             type="button"
+                            role="checkbox"
+                            aria-checked={!!selected[product.id]}
                             onClick={() => toggleProduct(product.id)}
                             className={`w-full flex items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm transition-all ${
                               selected[product.id]
@@ -292,10 +297,11 @@ export default function DemoPage() {
                   )}
 
                   <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
+                    <label htmlFor={`${fieldId}-message`} className="block text-xs font-medium text-gray-400 mb-2">
                       Anything else? (optional)
                     </label>
                     <textarea
+                      id={`${fieldId}-message`}
                       name="message"
                       rows={3}
                       value={form.message}
