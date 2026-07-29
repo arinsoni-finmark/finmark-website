@@ -66,6 +66,17 @@ export default function Hero() {
             Get a demo <ArrowRight size={16} />
           </GradientButton>
         </div>
+
+        {/* Brand mark — rotates upright once on load. See .hero-logo. */}
+        <div className="hero-logo mx-auto mt-14 w-[170px] sm:w-[210px] md:w-[240px]">
+          <img
+            src="/logo-full.png"
+            alt=""
+            width={655}
+            height={484}
+            className="h-auto w-full object-contain"
+          />
+        </div>
       </div>
 
       <div className="relative z-10 mx-auto mt-16 sm:mt-20 grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">

@@ -155,6 +155,33 @@
 }
 
 /* Reduced motion */
+/* Hero logo entrance.
+   Keeps the signature move from the old hero — the mark starts on its side
+   and rotates upright — but as a one-shot on load rather than something
+   scrubbed across four viewport heights of scrolling. Pure CSS, so it adds
+   no JS and no dependency; the reduced-motion block below collapses it to
+   its final state for anyone who has asked for less movement. */
+@keyframes logo-settle {
+  from {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.55);
+  }
+  to {
+    opacity: 0.22;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* No fill-mode on purpose. With `both` the element would sit at the keyframe's
+   `from` state — opacity 0 — until the animation started, so anything that
+   stopped it running would leave the logo invisible. Resting state lives on
+   the class instead, so the logo is always visible and the animation is
+   purely additive. */
+.hero-logo {
+  opacity: 0.22;
+  animation: logo-settle 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
