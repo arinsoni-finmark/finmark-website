@@ -80,13 +80,14 @@ export default function CountryPage({ pillar, country: slug }) {
       />
 
       {/* Product walkthrough for this market */}
-      {country.video?.youtubeId && (
+      {(country.video?.youtubeId || country.video?.placeholder) && (
         <section className="relative py-8 sm:py-12">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <VideoEmbed
               youtubeId={country.video.youtubeId}
               title={country.video.title}
               poster={country.video.poster}
+              placeholder={country.video.placeholder}
             />
           </div>
         </section>

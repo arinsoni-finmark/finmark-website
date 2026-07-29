@@ -9,6 +9,7 @@ import GradientButton from '../components/ui/GradientButton'
 import { PRODUCTS } from '../lib/constants'
 import { getClustersForPillar } from '../content/clusters'
 import { getPillarBySlug } from '../content/pillars'
+import { PUBLISHED_COUNTRIES } from '../content/countries'
 import {
   organizationSchema,
   webPageSchema,
@@ -61,6 +62,10 @@ export default function ProductIntroPage({ slug }) {
   // entry explicitly opts into a placeholder frame for layout review.
   const video = intro.video
   const showVideo = Boolean(video && (video.youtubeId || video.placeholder))
+
+  // Market pages for this product, where they exist. Empty until a country is
+  // published, so this renders nothing rather than an orphan heading.
+  const markets = product.slug === 'accounts-payable-automation' ? PUBLISHED_COUNTRIES : []
 
   return (
     <>
@@ -143,6 +148,25 @@ export default function ProductIntroPage({ slug }) {
               poster={video.poster}
               placeholder={video.placeholder}
             />
+
+            {markets.length > 0 && (
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
+                <span className="text-gray-500">See it for your market:</span>
+                {markets.map((c, i) => (
+                  <span key={c.slug} className="flex items-center gap-3">
+                    <Link
+                      to={`/${product.slug}/${c.slug}`}
+                      className="font-medium text-electric-light underline underline-offset-4 decoration-electric/30 transition-colors hover:text-white hover:decoration-electric"
+                    >
+                      {c.name}
+                    </Link>
+                    {i < markets.length - 1 && (
+                      <span aria-hidden="true" className="text-gray-700">&middot;</span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       )}
