@@ -8,6 +8,7 @@
 //   - All pillar pages from src/content/pillars.js
 //   - All product intro pages from src/lib/constants.js
 //   - All SEO cluster/guide pages from src/content/clusters.js
+//   - Published country/market pages from src/content/countries.js
 //
 // Duplicate paths are collapsed (a slug that is both a pillar and a product
 // only appears once). Update PRIORITIES below to weight some pages higher.
@@ -18,6 +19,7 @@ import { dirname, resolve } from 'node:path'
 import { PILLARS } from '../src/content/pillars.js'
 import { CLUSTERS } from '../src/content/clusters.js'
 import { PRODUCTS } from '../src/lib/constants.js'
+import { PUBLISHED_COUNTRIES } from '../src/content/countries.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -54,10 +56,18 @@ const CLUSTER_PAGES = CLUSTERS.map((c) => ({
   changefreq: 'monthly',
 }))
 
+// Country/market pages. Only published ones — an unfinished country must not
+// be advertised to Google before its page exists.
+const COUNTRY_PAGES = PUBLISHED_COUNTRIES.map((c) => ({
+  path: `/accounts-payable-automation/${c.slug}`,
+  priority: 0.8,
+  changefreq: 'monthly',
+}))
+
 // Collapse duplicate paths (e.g. a slug that is both a pillar and a product),
 // keeping the first occurrence so higher-priority entries win.
 const seen = new Set()
-const urls = [...STATIC_PAGES, ...PILLAR_PAGES, ...PRODUCT_PAGES, ...CLUSTER_PAGES]
+const urls = [...STATIC_PAGES, ...PILLAR_PAGES, ...PRODUCT_PAGES, ...CLUSTER_PAGES, ...COUNTRY_PAGES]
   .filter((u) => {
     if (seen.has(u.path)) return false
     seen.add(u.path)

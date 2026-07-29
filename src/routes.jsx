@@ -5,9 +5,11 @@ import DemoPage from './pages/DemoPage'
 import ContactPage from './pages/ContactPage'
 import ProductIntroPage from './pages/ProductIntroPage'
 import ClusterPage from './pages/ClusterPage'
+import CountryPage from './pages/CountryPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { PRODUCTS } from './lib/constants'
 import { CLUSTERS } from './content/clusters'
+import { PUBLISHED_COUNTRIES } from './content/countries'
 
 /**
  * Route table consumed by both react-router-dom and vite-react-ssg.
@@ -35,6 +37,17 @@ const clusterRoutes = CLUSTERS.map((c) => ({
   element: <ClusterPage pillar={c.pillar} cluster={c.slug} />,
 }))
 
+/**
+ * Market pages, e.g. /accounts-payable-automation/nigeria. Only countries
+ * flagged `published` get a route — an unfinished country in countries.js
+ * must never reach Google as a thin page.
+ */
+const AP_PILLAR = 'accounts-payable-automation'
+const countryRoutes = PUBLISHED_COUNTRIES.map((c) => ({
+  path: `${AP_PILLAR}/${c.slug}`,
+  element: <CountryPage pillar={AP_PILLAR} country={c.slug} />,
+}))
+
 export const routes = [
   {
     path: '/',
@@ -46,6 +59,7 @@ export const routes = [
       { path: 'contact', element: <ContactPage /> },
       ...productRoutes,
       ...clusterRoutes,
+      ...countryRoutes,
       { path: '*', element: <NotFoundPage /> },
     ],
   },
@@ -61,4 +75,5 @@ export const STATIC_PATHS = [
   '/contact',
   ...PRODUCTS.filter((p) => p.intro).map((p) => `/${p.slug}`),
   ...CLUSTERS.map((c) => `/${c.pillar}/${c.slug}`),
+  ...PUBLISHED_COUNTRIES.map((c) => `/${AP_PILLAR}/${c.slug}`),
 ]
