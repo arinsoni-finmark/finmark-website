@@ -40,6 +40,31 @@ export function breadcrumbSchema(items) {
   }
 }
 
+/**
+ * VideoObject — makes a product video eligible for Google's video rich
+ * results. Returns null when there is no video id yet, so a page can carry
+ * the call before its video exists without emitting a broken node.
+ *
+ * `uploadDate` must be ISO 8601 and is required by Google.
+ */
+export function videoSchema(video) {
+  if (!video || !video.youtubeId) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: video.title,
+    description: video.description,
+    thumbnailUrl:
+      video.poster
+        ? `${SITE_URL}${video.poster}`
+        : `https://i.ytimg.com/vi/${video.youtubeId}/maxresdefault.jpg`,
+    uploadDate: video.uploadDate,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${video.youtubeId}`,
+    ...(video.duration ? { duration: video.duration } : {}),
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  }
+}
+
 export function faqSchema(faqs) {
   if (!faqs || faqs.length === 0) return null
   return {
