@@ -4,6 +4,7 @@ import SEO from '../components/seo/SEO'
 import Breadcrumb from '../components/seo/Breadcrumb'
 import PillarHero from '../components/seo/PillarHero'
 import PillarSection from '../components/seo/PillarSection'
+import PillarFAQ from '../components/seo/PillarFAQ'
 import PillarCTA from '../components/seo/PillarCTA'
 import VideoEmbed from '../components/VideoEmbed'
 import { getCountryBySlug } from '../content/countries'
@@ -13,6 +14,7 @@ import {
   webPageSchema,
   breadcrumbSchema,
   videoSchema,
+  faqSchema,
 } from '../lib/schema'
 
 /**
@@ -65,6 +67,7 @@ export default function CountryPage({ pillar, country: slug }) {
           }),
           breadcrumbSchema(breadcrumbItems),
           videoSchema(country.video),
+          faqSchema(country.faqs),
         ]}
       />
       <Breadcrumb items={breadcrumbItems} />
@@ -97,6 +100,12 @@ export default function CountryPage({ pillar, country: slug }) {
           body={section.body}
         />
       ))}
+
+      {country.faqs?.length > 0 && (
+        <div className="border-t border-white/5">
+          <PillarFAQ faqs={country.faqs} heading={`${country.name}: common questions`} />
+        </div>
+      )}
 
       {/* Down-links to the deeper guides for this market */}
       {related.length > 0 && (
