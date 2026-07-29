@@ -63,16 +63,19 @@ export default function ProductIntroPage({ slug }) {
   const video = intro.video
   const showVideo = Boolean(video && (video.youtubeId || video.placeholder))
 
-  // One tab per available recording: the general walkthrough, then a version
-  // per published market. With a single entry VideoTabs drops the control and
-  // renders the video bare, so other products are unaffected.
+  // One tab per published market. The general walkthrough is the fallback
+  // rather than a tab of its own — it only shows when there are no market
+  // recordings to choose between, so the control never carries a tab that
+  // answers a different question from the others.
   const markets = product.slug === 'accounts-payable-automation' ? PUBLISHED_COUNTRIES : []
-  const videoTabs = [
-    ...(showVideo ? [{ key: 'general', label: 'Overview', video }] : []),
-    ...markets
-      .filter((c) => c.video?.youtubeId || c.video?.placeholder)
-      .map((c) => ({ key: c.slug, label: c.name, video: c.video })),
-  ]
+  const marketTabs = markets
+    .filter((c) => c.video?.youtubeId || c.video?.placeholder)
+    .map((c) => ({ key: c.slug, label: c.name, video: c.video }))
+  const videoTabs = marketTabs.length > 0
+    ? marketTabs
+    : showVideo
+      ? [{ key: 'general', label: product.label, video }]
+      : []
 
   return (
     <>
