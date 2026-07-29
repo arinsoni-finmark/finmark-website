@@ -93,15 +93,17 @@ export default function Hero() {
   useLogoScrollRotation(logoRef)
 
   return (
-    <section className="relative overflow-hidden px-4 pt-24 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:px-8">
+    <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8">
       {/* Static ambience — no motion, purely decorative */}
       <div className="absolute inset-0 bg-grid opacity-20" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_40%,transparent_0%,var(--color-dark)_100%)]" />
       <div className="glow-orb w-[600px] h-[600px] bg-electric/8 -top-40 -left-40" />
       <div className="glow-orb w-[500px] h-[500px] bg-purple/8 -bottom-32 -right-32" />
 
-      <div className="relative z-10 mx-auto max-w-5xl text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 text-xs sm:text-sm font-medium text-electric-light">
+      <div className="relative z-10 mx-auto flex min-h-screen min-h-dvh max-w-5xl flex-col justify-center pt-16 text-center">
+        {/* self-center so the pill hugs its text — as a flex item it would
+            otherwise stretch the full width of the column. */}
+        <span className="self-center inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 text-xs sm:text-sm font-medium text-electric-light">
           <Sparkles size={14} />
           Automate what slows you down
         </span>
@@ -125,8 +127,8 @@ export default function Hero() {
           </GradientButton>
         </div>
 
-        {/* Brand mark — rotates upright as it scrolls up through the viewport,
-            the way the old hero did, but without the 400vh rig to scrub against. */}
+        {/* Brand mark — starts on its side and turns upright as the page
+            scrolls, the way the old hero did, minus the 400vh rig. */}
         <div
           ref={logoRef}
           className="mx-auto mt-16 w-[170px] sm:w-[210px] md:w-[240px] will-change-transform"
@@ -142,7 +144,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto mt-16 sm:mt-20 grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">
+      <div className="relative z-10 mx-auto grid max-w-5xl grid-cols-1 gap-5 pb-24 sm:pb-28 md:grid-cols-3">
         {CARDS.map((card) => (
           <ReifyCard key={card.title} className="rounded-2xl">
             <div className="p-8 text-center h-full">
