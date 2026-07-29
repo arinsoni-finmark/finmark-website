@@ -164,22 +164,30 @@
 @keyframes logo-settle {
   from {
     opacity: 0;
-    transform: rotate(90deg) scale(0.55);
+    transform: rotate(90deg) scale(0.6);
   }
   to {
-    opacity: 0.22;
+    opacity: 0.28;
     transform: rotate(0deg) scale(1);
   }
 }
 
-/* No fill-mode on purpose. With `both` the element would sit at the keyframe's
-   `from` state — opacity 0 — until the animation started, so anything that
-   stopped it running would leave the logo invisible. Resting state lives on
-   the class instead, so the logo is always visible and the animation is
-   purely additive. */
+/* Easing is deliberately ease-in-out rather than a fast ease-out. An
+   aggressively front-loaded curve finishes the rotation inside ~350ms and
+   then creeps, which reads as a flicker you miss rather than a mark turning
+   upright. This spreads the movement across the full duration so it is
+   actually watchable.
+
+   No fill-mode and no delay, both on purpose. With `both` the element would
+   sit at the keyframe's `from` state — opacity 0 — until the animation
+   started, so anything that stopped it running would leave the logo
+   invisible. Resting state lives on the class instead, which makes the
+   animation purely additive; that in turn rules out a start delay, since
+   during the delay the logo would render upright and then snap back to
+   sideways to begin. */
 .hero-logo {
-  opacity: 0.22;
-  animation: logo-settle 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.28;
+  animation: logo-settle 1.5s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
