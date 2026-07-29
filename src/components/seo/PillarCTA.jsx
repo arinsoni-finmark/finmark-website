@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import GradientButton from '../ui/GradientButton'
@@ -16,15 +15,11 @@ export default function PillarCTA({
     <section className="relative py-24 sm:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(0,102,255,0.1)_0%,transparent_70%)]" />
       <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <h2
           className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight"
         >
           {heading}
-        </motion.h2>
+        </h2>
         {subhead && (
           <p className="mt-5 text-base sm:text-lg text-gray-400 leading-relaxed">
             {subhead}

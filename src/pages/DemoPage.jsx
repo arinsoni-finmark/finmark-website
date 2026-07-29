@@ -1,6 +1,5 @@
 import { useState, useEffect, useId } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { Sparkles, Check } from 'lucide-react'
 import SEO from '../components/seo/SEO'
 import Breadcrumb from '../components/seo/Breadcrumb'
@@ -151,10 +150,7 @@ export default function DemoPage() {
 
         <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+            <div
               className="mb-6 inline-flex"
             >
               <GlowBadge>
@@ -163,23 +159,17 @@ export default function DemoPage() {
                   Let's talk
                 </span>
               </GlowBadge>
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.05 }}
+            </div>
+            <h1
               className="font-display text-[2.25rem] sm:text-5xl md:text-6xl font-bold text-white tracking-[-0.02em] leading-[1.05]"
             >
               Book a <span className="gradient-text">call</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            </h1>
+            <p
               className="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mx-auto"
             >
               Tell us your problem and let's figure out how to solve it.
-            </motion.p>
+            </p>
           </div>
 
           <ReifyCard className="rounded-2xl max-w-lg mx-auto">

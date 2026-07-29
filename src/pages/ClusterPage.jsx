@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import SEO from '../components/seo/SEO'
 import Breadcrumb from '../components/seo/Breadcrumb'
@@ -173,14 +172,10 @@ function SiblingClustersBar({ siblings }) {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {siblings.map((s, i) => (
-            <motion.div
+          {siblings.map((s) => (
+            <div
               key={s.path}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-            >
+              >
               <Link to={s.path} className="block">
                 <ReifyCard className="rounded-2xl h-full">
                   <div className="p-6 h-full flex flex-col">
@@ -196,7 +191,7 @@ function SiblingClustersBar({ siblings }) {
                   </div>
                 </ReifyCard>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
@@ -23,14 +22,10 @@ export default function SiblingPillarsBar({ siblings, heading = 'Related platfor
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {siblings.map((s, i) => (
-            <motion.div
+          {siblings.map((s) => (
+            <div
               key={s.path}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-            >
+              >
               <Link
                 to={s.path}
                 className="group block rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-electric/40 transition-all duration-300 p-6 h-full"
@@ -43,7 +38,7 @@ export default function SiblingPillarsBar({ siblings, heading = 'Related platfor
                   Explore <ArrowRight size={12} />
                 </span>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

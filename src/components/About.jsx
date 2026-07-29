@@ -1,9 +1,6 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import GlowBadge from './ui/GlowBadge'
 import GradientButton from './ui/GradientButton'
-import useIsMobile from '../lib/useIsMobile'
 
 // Content sourced from FinMark-About-Section.docx.
 // "Who we are" section deliberately excluded per founder request.
@@ -50,22 +47,6 @@ const SECTIONS = [
 // (every page needs exactly one), while the homepage keeps it as an H2
 // under the hero's H1.
 export default function About({ headingTag: Heading = 'h2' }) {
-  const isMobile = useIsMobile()
-
-  const Wrapper = isMobile ? 'div' : motion.div
-  const sectionMotion = isMobile ? {} : {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 },
-  }
-  const delayMotion = (d) => isMobile ? {} : {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6, delay: d },
-  }
-
   return (
     <section id="about" className="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-8" />
@@ -73,41 +54,41 @@ export default function About({ headingTag: Heading = 'h2' }) {
       <div className="relative z-10 mx-auto max-w-4xl">
         {/* Header */}
         <div className="text-center mb-16">
-          <Wrapper {...sectionMotion}>
+          <div>
             <GlowBadge>About</GlowBadge>
-          </Wrapper>
-          <Wrapper {...delayMotion(0.1)}>
+          </div>
+          <div>
             <Heading className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">
               About <span className="gradient-text">FinMark.ai</span>
             </Heading>
-          </Wrapper>
-          <Wrapper {...delayMotion(0.15)}>
+          </div>
+          <div>
             <p className="mt-5 max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 leading-relaxed">
               Financial automation built for enterprise finance teams.
             </p>
-          </Wrapper>
+          </div>
         </div>
 
         {/* Sections */}
-        {SECTIONS.map((section, si) => (
+        {SECTIONS.map((section) => (
           <div key={section.kicker} className="mb-16 last:mb-0">
-            <Wrapper {...delayMotion(0.1 + si * 0.05)}>
+            <div>
               <p className="text-xs uppercase tracking-[0.2em] text-electric-light/80 mb-3 font-medium">
                 {section.kicker}
               </p>
-            </Wrapper>
+            </div>
             <div className="space-y-5 text-gray-400 leading-relaxed text-base sm:text-lg">
               {section.body.map((para, pi) => (
-                <Wrapper key={pi} {...delayMotion(0.15 + si * 0.05 + pi * 0.05)}>
+                <div key={pi}>
                   <p>{para}</p>
-                </Wrapper>
+                </div>
               ))}
             </div>
           </div>
         ))}
 
         {/* Let's talk CTA */}
-        <Wrapper {...delayMotion(0.4)}>
+        <div>
           <div className="mt-20 text-center">
             <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8">
               If you run ERP at an enterprise and any of what you just read sounds like your finance team's life, we would like to meet them.
@@ -116,7 +97,7 @@ export default function About({ headingTag: Heading = 'h2' }) {
               Book a 30-minute walkthrough <ArrowRight size={16} />
             </GradientButton>
           </div>
-        </Wrapper>
+        </div>
       </div>
     </section>
   )
