@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 import SEO from '../components/seo/SEO'
 import Breadcrumb from '../components/seo/Breadcrumb'
 import PillarFAQ from '../components/seo/PillarFAQ'
-import VideoEmbed from '../components/VideoEmbed'
+import VideoTabs from '../components/VideoTabs'
 import GlowBadge from '../components/ui/GlowBadge'
 import GradientButton from '../components/ui/GradientButton'
 import { PRODUCTS } from '../lib/constants'
@@ -63,9 +63,16 @@ export default function ProductIntroPage({ slug }) {
   const video = intro.video
   const showVideo = Boolean(video && (video.youtubeId || video.placeholder))
 
-  // Market pages for this product, where they exist. Empty until a country is
-  // published, so this renders nothing rather than an orphan heading.
+  // One tab per available recording: the general walkthrough, then a version
+  // per published market. With a single entry VideoTabs drops the control and
+  // renders the video bare, so other products are unaffected.
   const markets = product.slug === 'accounts-payable-automation' ? PUBLISHED_COUNTRIES : []
+  const videoTabs = [
+    ...(showVideo ? [{ key: 'general', label: 'Overview', video }] : []),
+    ...markets
+      .filter((c) => c.video?.youtubeId || c.video?.placeholder)
+      .map((c) => ({ key: c.slug, label: c.name, video: c.video })),
+  ]
 
   return (
     <>
@@ -139,34 +146,10 @@ export default function ProductIntroPage({ slug }) {
       </section>
 
       {/* Product walkthrough */}
-      {showVideo && (
+      {videoTabs.length > 0 && (
         <section className="relative pb-4 sm:pb-8">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <VideoEmbed
-              youtubeId={video.youtubeId}
-              title={video.title}
-              poster={video.poster}
-              placeholder={video.placeholder}
-            />
-
-            {markets.length > 0 && (
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
-                <span className="text-gray-500">See it for your market:</span>
-                {markets.map((c, i) => (
-                  <span key={c.slug} className="flex items-center gap-3">
-                    <Link
-                      to={`/${product.slug}/${c.slug}`}
-                      className="font-medium text-electric-light underline underline-offset-4 decoration-electric/30 transition-colors hover:text-white hover:decoration-electric"
-                    >
-                      {c.name}
-                    </Link>
-                    {i < markets.length - 1 && (
-                      <span aria-hidden="true" className="text-gray-700">&middot;</span>
-                    )}
-                  </span>
-                ))}
-              </div>
-            )}
+            <VideoTabs items={videoTabs} />
           </div>
         </section>
       )}
