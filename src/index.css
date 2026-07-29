@@ -85,8 +85,7 @@
     background-repeat: repeat;
     background-size: 256px 256px;
   }
-
-      }
+}
 
 /* ── Glass card ── */
 .reify-card {
@@ -155,41 +154,6 @@
 }
 
 /* Reduced motion */
-/* Hero logo entrance.
-   Keeps the signature move from the old hero — the mark starts on its side
-   and rotates upright — but as a one-shot on load rather than something
-   scrubbed across four viewport heights of scrolling. Pure CSS, so it adds
-   no JS and no dependency; the reduced-motion block below collapses it to
-   its final state for anyone who has asked for less movement. */
-@keyframes logo-settle {
-  from {
-    opacity: 0;
-    transform: rotate(90deg) scale(0.6);
-  }
-  to {
-    opacity: 0.28;
-    transform: rotate(0deg) scale(1);
-  }
-}
-
-/* Easing is deliberately ease-in-out rather than a fast ease-out. An
-   aggressively front-loaded curve finishes the rotation inside ~350ms and
-   then creeps, which reads as a flicker you miss rather than a mark turning
-   upright. This spreads the movement across the full duration so it is
-   actually watchable.
-
-   No fill-mode and no delay, both on purpose. With `both` the element would
-   sit at the keyframe's `from` state — opacity 0 — until the animation
-   started, so anything that stopped it running would leave the logo
-   invisible. Resting state lives on the class instead, which makes the
-   animation purely additive; that in turn rules out a start delay, since
-   during the delay the logo would render upright and then snap back to
-   sideways to begin. */
-.hero-logo {
-  opacity: 0.28;
-  animation: logo-settle 1.5s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

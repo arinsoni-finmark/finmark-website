@@ -1,6 +1,61 @@
+import { useRef, useEffect, useLayoutEffect } from 'react'
 import { ArrowRight, Sparkles, Brain, Shield, TrendingUp } from 'lucide-react'
 import GradientButton from './ui/GradientButton'
 import ReifyCard from './ui/ReifyCard'
+
+// useLayoutEffect warns during SSR; the body only matters in the browser.
+const useIsomorphicLayoutEffect =
+  typeof window === 'undefined' ? useEffect : useLayoutEffect
+
+// Scroll distance over which the mark turns upright. The old hero used a
+// 400vh sticky section — four screens before a visitor reached any content.
+// This is roughly half a screen and adds no page height whatsoever.
+const ROTATE_OVER_PX = 520
+
+/**
+ * Turns the brand mark upright as the page scrolls — the effect the old hero
+ * had, driven off page scroll the same way, but over half a screen instead of
+ * the 400vh sticky rig it used to need. It adds no page height at all.
+ *
+ * Writes straight to the node rather than going through React state. State
+ * would re-render the component on every scroll frame, which is the trap the
+ * old hero fell into by calling setState on every mousemove.
+ *
+ * Runs as a layout effect so the starting angle is applied before the browser
+ * paints. The markup renders the mark upright and visible, so it stays correct
+ * if this never runs at all — but without the pre-paint pass you would see it
+ * flick from upright to sideways on load.
+ */
+function useLogoScrollRotation(ref) {
+  useIsomorphicLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    // Leave the resting state alone for anyone who asked for less movement.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let frame = null
+    const apply = () => {
+      frame = null
+      const p = Math.min(1, Math.max(0, window.scrollY / ROTATE_OVER_PX))
+      // Faintly present at the top, brightening as it comes upright.
+      el.style.opacity = String(0.1 + 0.2 * p)
+      el.style.transform = `rotate(${90 * (1 - p)}deg) scale(${0.65 + 0.35 * p})`
+    }
+    const onScroll = () => {
+      if (frame === null) frame = requestAnimationFrame(apply)
+    }
+
+    apply()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame !== null) cancelAnimationFrame(frame)
+    }
+  }, [ref])
+}
 
 /**
  * Static hero.
@@ -34,6 +89,9 @@ const HERO_SUBHEAD =
   'FinMark.ai builds AI automation for enterprise finance teams — invoice capture, accounts payable, tax compliance, and ERP posting, end to end.'
 
 export default function Hero() {
+  const logoRef = useRef(null)
+  useLogoScrollRotation(logoRef)
+
   return (
     <section className="relative overflow-hidden px-4 pt-24 pb-20 sm:px-6 sm:pt-32 sm:pb-28 lg:px-8">
       {/* Static ambience — no motion, purely decorative */}
@@ -67,8 +125,13 @@ export default function Hero() {
           </GradientButton>
         </div>
 
-        {/* Brand mark — rotates upright once on load. See .hero-logo. */}
-        <div className="hero-logo mx-auto mt-14 w-[170px] sm:w-[210px] md:w-[240px]">
+        {/* Brand mark — rotates upright as it scrolls up through the viewport,
+            the way the old hero did, but without the 400vh rig to scrub against. */}
+        <div
+          ref={logoRef}
+          className="mx-auto mt-16 w-[170px] sm:w-[210px] md:w-[240px] will-change-transform"
+          style={{ opacity: 0.3 }}
+        >
           <img
             src="/logo-full.png"
             alt=""
