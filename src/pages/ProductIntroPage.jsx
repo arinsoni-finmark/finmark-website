@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import SEO from '../components/seo/SEO'
 import Breadcrumb from '../components/seo/Breadcrumb'
@@ -85,10 +84,7 @@ export default function ProductIntroPage({ slug }) {
 
         <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
             className="text-center mb-8"
           >
             <GlowBadge>
@@ -97,35 +93,26 @@ export default function ProductIntroPage({ slug }) {
                 {product.label}
               </span>
             </GlowBadge>
-          </motion.div>
+          </div>
 
           {/* H1 */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05 }}
+          <h1
             className="text-center font-display text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-[-0.02em] leading-[1.05]"
           >
             {intro.h1}
-          </motion.h1>
+          </h1>
 
           {/* Intro paragraphs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <div
             className="mt-10 space-y-6 text-base sm:text-lg text-gray-400 leading-relaxed"
           >
             {intro.body.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
-          </motion.div>
+          </div>
 
           {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
+          <div
             className="mt-12 text-center"
           >
             <GradientButton
@@ -134,7 +121,7 @@ export default function ProductIntroPage({ slug }) {
             >
               Get a demo <ArrowRight size={16} />
             </GradientButton>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -157,14 +144,10 @@ export default function ProductIntroPage({ slug }) {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {guides.map((g, i) => (
-                <motion.div
+              {guides.map((g) => (
+                <div
                   key={g.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: (i % 2) * 0.06 }}
-                >
+                  >
                   <Link
                     to={`/${g.pillar}/${g.slug}`}
                     className="group block h-full rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-colors hover:border-electric/40 hover:bg-electric/[0.04]"
@@ -183,7 +166,7 @@ export default function ProductIntroPage({ slug }) {
                       />
                     </span>
                   </Link>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

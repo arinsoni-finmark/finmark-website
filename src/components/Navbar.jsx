@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react'
 import { NAV_LINKS, PRODUCTS } from '../lib/constants'
 import GradientButton from './ui/GradientButton'
@@ -11,14 +10,18 @@ export default function Navbar() {
   const [platformOpen, setPlatformOpen] = useState(false)
   const platformRef = useRef(null)
   const closeTimer = useRef(null)
-  const { scrollYProgress } = useScroll()
-  const navOpacity = useTransform(scrollYProgress, [0, 0.05], [0, 1])
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50)
+    // Run once on mount — a deep link or restored scroll position would
+    // otherwise leave the bar transparent until the first scroll event.
+    handler()
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
+
+  // The 150ms close timer can outlive the component
+  useEffect(() => () => clearTimeout(closeTimer.current), [])
 
   // Close platform dropdown when clicking outside
   useEffect(() => {
@@ -40,18 +43,16 @@ export default function Navbar() {
   }
 
   return (
-    <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
         scrolled ? 'glass-strong shadow-lg shadow-black/30' : 'bg-transparent'
       }`}
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      {/* Bottom border that fades in on scroll */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric/30 to-transparent"
-        style={{ opacity: navOpacity }}
+      {/* Bottom border, visible once the page has scrolled */}
+      <div
+        className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric/30 to-transparent transition-opacity duration-300 ${
+          scrolled ? 'opacity-100' : 'opacity-0'
+        }`}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -81,13 +82,8 @@ export default function Navbar() {
                   className={`transition-transform duration-200 ${platformOpen ? 'rotate-180' : ''}`}
                 />
               </button>
-              <AnimatePresence>
-                {platformOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
+              {platformOpen && (
+                  <div
                     className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[680px] glass-strong rounded-2xl border border-white/10 shadow-2xl shadow-black/40 overflow-hidden"
                   >
                     {PRODUCTS.map((product) => (
@@ -159,36 +155,23 @@ export default function Navbar() {
                         Tell us what you need and we'll build it for you within 2 weeks
                       </p>
                     </Link>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  </div>
+              )}
             </div>
 
-            {NAV_LINKS.map((link, i) => (
-              <motion.div
+            {NAV_LINKS.map((link) => (
+              <Link
                 key={link.label}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i + 0.3 }}
+                to={link.to}
+                className="relative text-sm text-gray-400 transition-colors hover:text-white py-1"
               >
-                <Link
-                  to={link.to}
-                  className="relative text-sm text-gray-400 transition-colors hover:text-white py-1"
-                >
-                  {link.label}
-                </Link>
-              </motion.div>
+                {link.label}
+              </Link>
             ))}
 
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <GradientButton to="/demo" className="text-sm px-5 py-2">
-                Get a demo
-              </GradientButton>
-            </motion.div>
+            <GradientButton to="/demo" className="text-sm px-5 py-2">
+              Get a demo
+            </GradientButton>
           </div>
 
           {/* Mobile toggle */}
@@ -203,15 +186,8 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="md:hidden glass-strong border-t border-white/5"
-          >
+      {mobileOpen && (
+          <div className="md:hidden glass-strong border-t border-white/5">
             <div className="px-4 py-4 space-y-1 max-h-[80vh] overflow-y-auto">
               <p className="px-3 pt-2 pb-1 text-xs uppercase tracking-[0.18em] text-gray-600">
                 Products
@@ -273,9 +249,8 @@ export default function Navbar() {
                 </GradientButton>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+          </div>
+      )}
+    </nav>
   )
 }

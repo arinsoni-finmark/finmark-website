@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 
 /**
  * Generic content section used inside pillar/cluster pages.
@@ -19,15 +18,11 @@ export default function PillarSection({ kicker, heading, body, children, id }) {
           </p>
         )}
         {heading && (
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6 }}
+          <h2
             className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight"
           >
             {heading}
-          </motion.h2>
+          </h2>
         )}
         {paragraphs.length > 0 && (
           <div className="mt-6 space-y-5 text-base sm:text-lg text-gray-400 leading-relaxed">

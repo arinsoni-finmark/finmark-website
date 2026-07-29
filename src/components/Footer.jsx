@@ -1,5 +1,4 @@
 import { useState, useId } from 'react'
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Send, Check } from 'lucide-react'
 import { PRODUCTS } from '../lib/constants'
@@ -117,13 +116,7 @@ export default function Footer() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <motion.div
-            className="col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="col-span-2">
             <Link to="/" className="flex items-center mb-4">
               <img src="/logo-nav.png" alt="FinMark.ai" width={173} height={128} className="h-8 w-auto" />
             </Link>
@@ -135,16 +128,10 @@ export default function Footer() {
 
             {/* Newsletter */}
             <NewsletterSignup />
-          </motion.div>
+          </div>
 
           {/* Platform */}
-          <motion.div
-            className="col-span-1"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-          >
+          <div className="col-span-1">
             <h4 className="text-sm font-semibold text-white mb-4">Products</h4>
             <ul className="space-y-2">
               {PRODUCTS.map((product) => (
@@ -158,16 +145,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Company */}
-          <motion.div
-            className="col-span-1"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
+          <div className="col-span-1">
             <h4 className="text-sm font-semibold text-white mb-4">Company</h4>
             <ul className="space-y-2">
               {COMPANY_LINKS.map((link) => (
@@ -181,7 +162,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">

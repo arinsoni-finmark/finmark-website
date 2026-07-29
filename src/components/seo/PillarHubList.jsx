@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import ReifyCard from '../ui/ReifyCard'
@@ -21,21 +20,17 @@ export default function PillarHubList({ heading, clusters, pillarSlug }) {
     <section className="relative py-20 sm:py-28">
       <div className="absolute inset-0 bg-grid opacity-8" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <h2
           className="text-center font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4"
         >
           {heading}
-        </motion.h2>
+        </h2>
         <p className="text-center text-gray-500 max-w-2xl mx-auto mb-14 text-sm sm:text-base">
           Explore the topics covered by this pillar.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {clusters.map((c, i) => {
+          {clusters.map((c) => {
             const href = c.path || `/${pillarSlug}/${c.slug}`
             const cardInner = (
               <ReifyCard className="rounded-2xl h-full">
@@ -58,17 +53,13 @@ export default function PillarHubList({ heading, clusters, pillarSlug }) {
                 {cardInner}
               </Link>
             ) : (
-              <motion.div
+              <div
                 key={c.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-              >
+                >
                 <Link to={href} className="block">
                   {cardInner}
                 </Link>
-              </motion.div>
+              </div>
             )
           })}
         </div>

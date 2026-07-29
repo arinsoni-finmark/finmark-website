@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import GradientButton from '../ui/GradientButton'
@@ -19,10 +18,7 @@ export default function PillarHero({ badge, h1, subhead, primaryCta, secondaryCt
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
         {badge && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
             className="mb-6 inline-flex"
           >
             <GlowBadge>
@@ -31,33 +27,24 @@ export default function PillarHero({ badge, h1, subhead, primaryCta, secondaryCt
                 {badge}
               </span>
             </GlowBadge>
-          </motion.div>
+          </div>
         )}
 
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.05 }}
+        <h1
           className="font-display text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-[-0.02em] leading-[1.05]"
         >
           {h1}
-        </motion.h1>
+        </h1>
 
         {subhead && (
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <p
             className="mt-6 mx-auto max-w-3xl text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed"
           >
             {subhead}
-          </motion.p>
+          </p>
         )}
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+        <div
           className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           {primaryCta && (
@@ -76,7 +63,7 @@ export default function PillarHero({ badge, h1, subhead, primaryCta, secondaryCt
               {secondaryCta.label}
             </Link>
           )}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
