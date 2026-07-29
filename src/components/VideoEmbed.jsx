@@ -13,15 +13,32 @@ import { Play } from 'lucide-react'
  * never press play.
  *
  * Props:
- *   - youtubeId  the id from the watch URL (the v= part)
- *   - title      accessible name, also the tooltip
- *   - poster     optional self-hosted still. Falls back to YouTube's
- *                thumbnail, which costs one request to i.ytimg.com.
+ *   - youtubeId   the id from the watch URL (the v= part)
+ *   - title       accessible name, also the tooltip
+ *   - poster      optional self-hosted still. Falls back to YouTube's
+ *                 thumbnail, which costs one request to i.ytimg.com.
+ *   - placeholder render an empty frame when there is no id yet, so the
+ *                 layout can be reviewed before the video exists. Never
+ *                 pass this on a page that is publicly reachable — an empty
+ *                 video box reads as broken.
  */
-export default function VideoEmbed({ youtubeId, title, poster }) {
+export default function VideoEmbed({ youtubeId, title, poster, placeholder = false }) {
   const [playing, setPlaying] = useState(false)
 
-  if (!youtubeId) return null
+  if (!youtubeId) {
+    if (!placeholder) return null
+    return (
+      <div className="relative flex w-full items-center justify-center overflow-hidden rounded-2xl border border-dashed border-white/15 bg-white/[0.02] aspect-video">
+        <div className="text-center">
+          <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-electric/40 to-purple/40">
+            <Play size={26} className="ml-1 text-white/70" fill="currentColor" />
+          </span>
+          <p className="font-display text-sm font-medium text-gray-400">{title}</p>
+          <p className="mt-1 text-xs text-gray-600">Video coming soon</p>
+        </div>
+      </div>
+    )
+  }
 
   const thumbnail = poster || `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`
 

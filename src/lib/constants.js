@@ -30,6 +30,21 @@ export const PRODUCTS = [
       metaTitle: 'Accounts Payable (AP) Automation Software | FinMark.ai',
       metaDescription: 'AI-powered accounts payable automation. Full invoice-to-ERP workflow — capture, match, validate, approve, post. Live in production with enterprise customers.',
       h1: 'Accounts Payable',
+      // Product walkthrough. `placeholder` draws an empty frame so the layout
+      // can be reviewed before the video exists — turn it OFF before this page
+      // ships, since an empty video box on a commercial page reads as broken.
+      // To go live: set youtubeId and uploadDate, drop placeholder, and check
+      // the recording frame by frame for real vendor names, amounts, approver
+      // names and the tenant subdomain in the URL bar.
+      video: {
+        youtubeId: null,
+        placeholder: true,
+        title: 'FinMark.ai Accounts Payable — product walkthrough',
+        description:
+          'A walkthrough of the FinMark.ai accounts payable workflow: invoice capture, matching against live ERP data, automatic withholding tax computation, and posting back into the ERP.',
+        uploadDate: null,
+        poster: null,
+      },
       body: [
         'FinMark.ai runs the full invoice-to-ERP workflow end to end. AI captures invoices in any format. Matching happens against live ERP data. Withholding tax is computed automatically against current regulations. Sanity checks catch what AI alone would miss. Approved invoices post back into the ERP, audit-ready.',
         'What used to take finance teams days now takes minutes. The platform is live in production with enterprise customers today.',
