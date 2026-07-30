@@ -63,6 +63,14 @@ export default function VideoEmbed({ youtubeId, title, poster, placeholder = fal
             src={thumbnail}
             alt=""
             loading="lazy"
+            // maxresdefault only exists for videos uploaded at 1080p or above;
+            // below that YouTube 404s it and the frame renders broken. hqdefault
+            // is always generated, so fall back to it once.
+            onError={(e) => {
+              if (poster || e.currentTarget.dataset.fallback) return
+              e.currentTarget.dataset.fallback = '1'
+              e.currentTarget.src = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`
+            }}
             className="absolute inset-0 h-full w-full object-cover opacity-70 transition-opacity group-hover:opacity-85"
           />
           <span className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />

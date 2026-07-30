@@ -53,20 +53,37 @@ export const PRODUCTS = [
     },
   },
   {
-    label: 'ERP Audit',
-    slug: 'erp-audit',
-    to: '/erp-audit',
-    description: 'Automated audit and compliance for your ERP.',
+    label: 'Mailbrief',
+    slug: 'mailbrief',
+    to: '/mailbrief',
+    description: 'The inbox that reads itself — ranked triage, a morning brief, and draft replies.',
     badge: null,
     features: [],
     intro: {
-      metaTitle: 'ERP Audit — Automated Compliance Checks | FinMark.ai',
-      metaDescription: 'Automated ERP audit that finds anomalies, control gaps, and compliance issues in your financial data before your auditors do.',
-      h1: 'ERP Audit',
+      metaTitle: 'Mailbrief — AI Inbox Triage and Morning Brief | FinMark.ai',
+      metaDescription:
+        'Mailbrief watches every inbox, ranks each message, and hands you one morning brief plus draft replies in your voice. Read-only — nothing sends without you.',
+      h1: 'Mailbrief',
+      // Copy adapted from the Mailbrief one-pager, with two deliberate
+      // omissions: no pricing, and no naming of the underlying model. Both
+      // follow existing site rules — see the note at the top of pillars.js
+      // for why the provider stays opaque.
+      video: {
+        youtubeId: 'ng8tzkGc15M',
+        title: '28 emails, 6 inboxes, one morning brief — Mailbrief demo',
+        description:
+          'A two-minute walkthrough of Mailbrief: the morning brief, the ranked buckets, and a reply being drafted in your voice.',
+        // TODO: set the YouTube upload date (ISO 8601, e.g. '2026-07-23').
+        // videoSchema stays silent until it is set, because Google requires
+        // uploadDate and rejects a VideoObject without it.
+        uploadDate: null,
+        poster: null,
+      },
       body: [
-        'Your ERP holds all your financial data. FinMark.ai\'s ERP Audit scans it automatically — looking for anomalies, control gaps, duplicate transactions, unauthorized changes, and compliance issues that manual audits miss or find too late.',
-        'Instead of quarterly reviews that surface problems weeks after they happen, ERP Audit runs continuously on your live data. Findings are flagged with full context so your finance team can act immediately — not after the auditor leaves.',
-        'Built on the same AI and ERP integration layer that powers our AP automation product. If you run an ERP, this is the audit tool that actually understands your data.',
+        'Founders live in five or six inboxes. Mailbrief watches all of them, ranks every message, and hands you one morning brief — what needs you, what is worth reading, and what has been filed away as noise.',
+        'Three things happen automatically, every morning. Ranked triage sorts every message across every inbox into needs-you, important, can-wait and noise, most urgent first, each with a one-line reason. A daily brief gives you that in plain English: what needs a reply, what is worth a read, and how much noise was filed away for you. And draft replies are written in your voice — edit one, regenerate it, or save it straight to Outlook Drafts.',
+        'Nothing sends without you. Mailbrief signs in with Microsoft, so there are no new passwords, and it reads your mail read-only — it never writes to it. Sending is off by default. Data is encrypted and access is least-privilege.',
+        'What it buys back is a founder\'s scarcest asset: attention. Around fifteen hours of triage a month, and three things that change shape — the customer ready to sign surfaces at the top instead of on page three, the day starts already sorted instead of six inboxes and a scroll, and a reply becomes a tighten-and-send rather than a blank page.',
       ],
     },
   },

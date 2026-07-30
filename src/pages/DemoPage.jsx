@@ -14,7 +14,7 @@ import {
 
 const PRODUCT_OPTIONS = [
   { id: 'ap', label: 'Accounts Payable' },
-  { id: 'erp-audit', label: 'ERP Audit' },
+  { id: 'mailbrief', label: 'Mailbrief' },
   { id: 'fpa', label: 'FP&A' },
   { id: 'mt-billing', label: 'MT Billing' },
   { id: 'pnl-auto-track', label: 'P&L Auto Track' },
@@ -29,7 +29,9 @@ const PRODUCT_PARAM_MAP = {
   'accounts-payable-automation': 'Accounts Payable',
   'accounts-payable': 'Accounts Payable',
   'ap': 'Accounts Payable',
-  'erp-audit': 'ERP Audit',
+  'mailbrief': 'Mailbrief',
+  // old slug kept so /demo?product=erp-audit from a stale link still resolves
+  'erp-audit': 'Mailbrief',
   'fpa': 'FP&A',
   'mt-billing': 'MT Billing',
   'pnl-auto-track': 'P&L Auto Track',

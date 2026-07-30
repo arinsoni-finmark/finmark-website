@@ -35,5 +35,6 @@
 # ─────────────────────────────────────────────────────
 /request                                                          /demo?product=custom                      301
 /spend-analytics                                                  /mt-billing                               301
+/erp-audit                                                        /mailbrief                                301
 # NOTE: /accounts-payable-automation/* are now real SEO guide pages
 # (see src/content/clusters.js), so no wildcard redirect here.
