@@ -13,6 +13,7 @@ Key facts:
 ## Products
 
 - [Accounts Payable Automation](https://finmark.ai/accounts-payable-automation): AI-powered AP automation, live in production. Full invoice-to-ERP workflow: capture, match, validate, compute withholding tax, approve, post.
+- [Security](https://finmark.ai/security): Data protection at FinMark.ai — encryption in transit and at rest, per-tenant isolation, least-privilege access, audit logging, regular penetration testing. FinMark.ai never executes payments; it stops at the ERP.
 - [Mailbrief](https://finmark.ai/mailbrief): Inbox triage for founders — every inbox ranked, a morning brief, and draft replies in your voice. Read-only; nothing sends without you.
 - [FP&A](https://finmark.ai/fpa): Automated financial reporting for enterprise groups — P&L, balance sheet, cash flow, budget vs actuals (AOP/LE), expense reports, SKU margin, and rebate analytics from trial balance and GL data. Multi-company with per-entity isolation. Live in production.
 - [MT Billing](https://finmark.ai/mt-billing): Multi-tenant billing automation.

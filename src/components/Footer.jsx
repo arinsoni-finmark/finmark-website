@@ -5,6 +5,7 @@ import { PRODUCTS } from '../lib/constants'
 
 const COMPANY_LINKS = [
   { label: 'About', to: '/about' },
+  { label: 'Security', to: '/security' },
   { label: 'Contact', to: '/contact' },
   { label: 'Get a demo', to: '/demo' },
 ]
