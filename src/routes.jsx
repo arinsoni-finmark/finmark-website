@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import DemoPage from './pages/DemoPage'
 import ContactPage from './pages/ContactPage'
+import SecurityPage from './pages/SecurityPage'
 import ProductIntroPage from './pages/ProductIntroPage'
 import ClusterPage from './pages/ClusterPage'
 import CountryPage from './pages/CountryPage'
@@ -57,6 +58,7 @@ export const routes = [
       { path: 'about', element: <AboutPage /> },
       { path: 'demo', element: <DemoPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'security', element: <SecurityPage /> },
       ...productRoutes,
       ...clusterRoutes,
       ...countryRoutes,
@@ -73,6 +75,7 @@ export const STATIC_PATHS = [
   '/about',
   '/demo',
   '/contact',
+  '/security',
   ...PRODUCTS.filter((p) => p.intro).map((p) => `/${p.slug}`),
   ...CLUSTERS.map((c) => `/${c.pillar}/${c.slug}`),
   ...PUBLISHED_COUNTRIES.map((c) => `/${AP_PILLAR}/${c.slug}`),

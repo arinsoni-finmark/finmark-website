@@ -36,6 +36,7 @@ Key facts:
 
 ## Company
 
+- [Security](https://finmark.ai/security): Data protection at FinMark.ai — encryption in transit and at rest, per-tenant isolation, least-privilege access, audit logging, regular penetration testing. FinMark.ai never executes payments; it stops at the ERP. Not SOC 2 or ISO 27001 certified.
 - [About FinMark.ai](https://finmark.ai/about): Why FinMark.ai exists and how the product was built alongside enterprise finance teams.
 - [Book a demo](https://finmark.ai/demo): 30-minute walkthrough with the founders.
 - [Contact](https://finmark.ai/contact): Get in touch.
