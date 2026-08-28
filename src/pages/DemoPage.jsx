@@ -6,6 +6,8 @@ import Breadcrumb from '../components/seo/Breadcrumb'
 import GlowBadge from '../components/ui/GlowBadge'
 import GradientButton from '../components/ui/GradientButton'
 import ReifyCard from '../components/ui/ReifyCard'
+import BookingEmbed from '../components/BookingEmbed'
+import { BOOKING } from '../lib/site'
 import {
   organizationSchema,
   webPageSchema,
@@ -168,9 +170,29 @@ export default function DemoPage() {
             <p
               className="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mx-auto"
             >
-              Tell us your problem and let's figure out how to solve it.
+              {BOOKING.url
+                ? 'Grab a slot below, or send us a message and we\'ll come back to you.'
+                : "Tell us your problem and let's figure out how to solve it."}
             </p>
           </div>
+
+          {/* Booking first — someone who is ready to talk should not have to
+              fill in a form and wait. Renders nothing until BOOKING.url is set. */}
+          <BookingEmbed />
+
+          {BOOKING.url && (
+            <div className="my-10 flex items-center gap-4" aria-hidden="true">
+              <span className="h-px flex-1 bg-white/10" />
+              <span className="text-xs uppercase tracking-[0.2em] text-gray-600">or</span>
+              <span className="h-px flex-1 bg-white/10" />
+            </div>
+          )}
+
+          {BOOKING.url && (
+            <p className="mb-6 text-center text-sm text-gray-400">
+              Not ready to book? Tell us what you need and we&apos;ll come back to you.
+            </p>
+          )}
 
           <ReifyCard className="rounded-2xl max-w-lg mx-auto">
             <div className="p-8">
