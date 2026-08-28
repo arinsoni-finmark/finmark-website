@@ -27,7 +27,14 @@ export default function BookingEmbed() {
             src={BOOKING.url}
             title="Book a call with FinMark.ai"
             className="w-full"
-            style={{ height: `${BOOKING.heightPx}px`, border: 0 }}
+            // color-scheme is declared because an embedded document is
+            // supposed to inherit it, and it costs nothing if Google starts
+            // honouring it. Tested: today they do not. The booking page
+            // follows the visitor's own system theme, so someone in light
+            // mode gets a white panel on this dark page and there is no way
+            // to override it from out here — the frame is cross-origin, so
+            // its colours, fonts and layout are all beyond reach.
+            style={{ height: `${BOOKING.heightPx}px`, border: 0, colorScheme: 'dark' }}
             loading="lazy"
           />
         </div>
