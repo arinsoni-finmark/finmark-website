@@ -14,7 +14,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-dark noise-overlay">
       <Navbar />
-      <main>
+      {/* The navbar is fixed, so it is out of flow and every page would
+          otherwise start underneath it — which was hiding the breadcrumb on
+          every inner page entirely. h-16 nav, so pt-16 here. */}
+      <main className="pt-16">
         <Outlet />
       </main>
       <Footer />

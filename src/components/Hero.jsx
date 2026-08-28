@@ -100,7 +100,7 @@ export default function Hero() {
       <div className="glow-orb w-[600px] h-[600px] bg-electric/8 -top-40 -left-40" />
       <div className="glow-orb w-[500px] h-[500px] bg-purple/8 -bottom-32 -right-32" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen min-h-dvh max-w-5xl flex-col justify-center pt-16 text-center">
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] min-h-[calc(100dvh-4rem)] max-w-5xl flex-col justify-center text-center">
         {/* self-center so the pill hugs its text — as a flex item it would
             otherwise stretch the full width of the column. */}
         <span className="self-center inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/[0.08] px-4 py-2 text-xs sm:text-sm font-medium text-electric-light">
