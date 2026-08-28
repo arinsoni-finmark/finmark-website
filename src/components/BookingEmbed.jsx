@@ -38,7 +38,7 @@ export default function BookingEmbed() {
         <p className="mt-4 text-center text-sm text-gray-500">
           Calendar not loading?{' '}
           <a
-            href={BOOKING.url}
+            href={BOOKING.fallbackUrl || BOOKING.url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-electric-light underline underline-offset-4 decoration-electric/30 hover:text-white hover:decoration-electric"

@@ -39,11 +39,20 @@ export const SOCIAL = {
  * which matters on a site that was cut from 375KB to 213KB on purpose.
  */
 export const BOOKING = {
-  url: null,
+  // NOTE: this is NOT the short calendar.app.google link Google hands you when
+  // you press Share. That one redirects to /appointments/schedules/… which
+  // sends X-Frame-Options: SAMEORIGIN and refuses to load in a frame. The
+  // embeddable form adds the /calendar/ path segment and ?gv=true, and sends
+  // no framing header. If you swap this link, re-check that before shipping.
+  url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1DhhIORuqy6XyTRjI5tTVOVgb6V21UhbDEyy3l1UMk8h3Nane83GA43N1Cdk_Es6AVbm1FveAX?gv=true',
   // Shown above the calendar. Keep it short.
   heading: 'Pick a time that works',
-  subhead: 'A 30-minute walkthrough with the team. No prep needed.',
+  subhead: 'A 20-minute intro call. No prep needed.',
   // Scheduler iframes do not resize themselves cross-origin, so this is
   // fixed. ~720 fits a month grid plus the slot list without inner scrolling.
   heightPx: 720,
+  // Used for the "open in a new tab" fallback, so anyone whose browser or
+  // corporate policy blocks the frame gets the clean shareable link rather
+  // than the embed URL.
+  fallbackUrl: 'https://calendar.app.google/ReJFJKyYv1Po5iKAA',
 }
