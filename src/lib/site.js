@@ -47,10 +47,10 @@ export const BOOKING = {
   url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1DhhIORuqy6XyTRjI5tTVOVgb6V21UhbDEyy3l1UMk8h3Nane83GA43N1Cdk_Es6AVbm1FveAX?gv=true',
   // Shown above the calendar. Keep it short.
   heading: 'Pick a time that works',
-  subhead: 'A 20-minute intro call. No prep needed.',
+  subhead: 'A 30-minute intro call over Google Meet. No prep needed.',
   // Scheduler iframes do not resize themselves cross-origin, so this is
   // fixed. ~720 fits a month grid plus the slot list without inner scrolling.
-  heightPx: 720,
+  heightPx: 900,
   // Used for the "open in a new tab" fallback, so anyone whose browser or
   // corporate policy blocks the frame gets the clean shareable link rather
   // than the embed URL.

@@ -13,11 +13,21 @@ export default function Navbar() {
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50)
-    // Run once on mount — a deep link or restored scroll position would
-    // otherwise leave the bar transparent until the first scroll event.
+
+    // Run once on mount, and again after the browser has had a chance to
+    // restore a previous scroll position. Restoration does not reliably emit
+    // a scroll event, so without the second pass a reload part-way down the
+    // page leaves the bar transparent and headings bleed through it.
     handler()
+    const settle = requestAnimationFrame(handler)
     window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
+    window.addEventListener('pageshow', handler)
+
+    return () => {
+      cancelAnimationFrame(settle)
+      window.removeEventListener('scroll', handler)
+      window.removeEventListener('pageshow', handler)
+    }
   }, [])
 
   // The 150ms close timer can outlive the component
