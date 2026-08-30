@@ -150,7 +150,7 @@ export default function DemoPage() {
         <div className="glow-orb w-[700px] h-[700px] bg-electric/8 -top-40 -right-40" />
         <div className="glow-orb w-[500px] h-[500px] bg-purple/8 -bottom-32 -left-32" />
 
-        <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div
               className="mb-6 inline-flex"
@@ -171,30 +171,49 @@ export default function DemoPage() {
               className="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed max-w-xl mx-auto"
             >
               {BOOKING.url
-                ? 'Grab a slot below, or send us a message and we\'ll come back to you.'
+                ? 'Grab a slot, or send us a message and we\'ll come back to you.'
                 : "Tell us your problem and let's figure out how to solve it."}
             </p>
           </div>
 
-          {/* Booking first — someone who is ready to talk should not have to
-              fill in a form and wait. Renders nothing until BOOKING.url is set. */}
-          <BookingEmbed />
+          {/* Two columns so both routes are visible at once. Stacked, the form
+              sat below a 900px calendar and nobody scrolled to it. The calendar
+              gets the wider column because Google's UI cramps below ~600px.
+              Falls back to a single centred form when no scheduler is set. */}
+          <div
+            className={
+              BOOKING.url
+                ? 'grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:items-start'
+                : ''
+            }
+          >
+            {BOOKING.url && (
+              <div>
+                <div className="mb-5">
+                  <h2 className="font-display text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                    {BOOKING.heading}
+                  </h2>
+                  {BOOKING.subhead && (
+                    <p className="mt-2 text-sm text-gray-400">{BOOKING.subhead}</p>
+                  )}
+                </div>
+                <BookingEmbed />
+              </div>
+            )}
 
-          {BOOKING.url && (
-            <div className="my-10 flex items-center gap-4" aria-hidden="true">
-              <span className="h-px flex-1 bg-white/10" />
-              <span className="text-xs uppercase tracking-[0.2em] text-gray-600">or</span>
-              <span className="h-px flex-1 bg-white/10" />
-            </div>
-          )}
+            <div>
+              {BOOKING.url && (
+                <div className="mb-5">
+                  <h2 className="font-display text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                    Rather send a message?
+                  </h2>
+                  <p className="mt-2 text-sm text-gray-400">
+                    Tell us what you need and we&apos;ll come back to you.
+                  </p>
+                </div>
+              )}
 
-          {BOOKING.url && (
-            <p className="mb-6 text-center text-sm text-gray-400">
-              Not ready to book? Tell us what you need and we&apos;ll come back to you.
-            </p>
-          )}
-
-          <ReifyCard className="rounded-2xl max-w-lg mx-auto">
+          <ReifyCard className={BOOKING.url ? 'rounded-2xl' : 'rounded-2xl max-w-lg mx-auto'}>
             <div className="p-8">
               {status === 'sent' ? (
                 <div className="text-center py-12">
@@ -333,6 +352,8 @@ export default function DemoPage() {
               )}
             </div>
           </ReifyCard>
+            </div>
+          </div>
         </div>
       </section>
     </>
