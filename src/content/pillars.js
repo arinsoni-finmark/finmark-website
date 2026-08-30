@@ -80,15 +80,17 @@ export const PILLARS = [
 ]
 
 /**
- * Lookup helper used by PillarPage.jsx
+ * Lookup helper. Used by ProductIntroPage to pull a product page's FAQs
+ * when its slug also names a pillar.
  */
 export function getPillarBySlug(slug) {
   return PILLARS.find((p) => p.slug === slug)
 }
 
 /**
- * Resolve a sibling pillar slug into the metadata needed for SiblingPillarsBar.
- * Currently returns nothing because the site has only one pillar.
+ * Resolve a sibling pillar slug into page metadata. Nothing consumes this
+ * today — the site has one pillar — but it is the shape a cross-pillar nav
+ * would need if a second one ships.
  */
 export function resolveSiblings(siblingSlugs) {
   return siblingSlugs
