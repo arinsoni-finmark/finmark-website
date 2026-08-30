@@ -62,21 +62,13 @@ export const routes = [
       ...productRoutes,
       ...clusterRoutes,
       ...countryRoutes,
+      // An explicit /404 alongside the wildcard. The wildcard cannot be
+      // pre-rendered — there is no single path to write a file for — so
+      // without this the build emits no 404.html and Netlify falls back to
+      // its own generic page: no logo, no nav, no way back to the site.
+      // Netlify serves 404.html automatically for any unmatched URL.
+      { path: '404', element: <NotFoundPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
-]
-
-/**
- * Flat list of all static URLs in the app.
- */
-export const STATIC_PATHS = [
-  '/',
-  '/about',
-  '/demo',
-  '/contact',
-  '/security',
-  ...PRODUCTS.filter((p) => p.intro).map((p) => `/${p.slug}`),
-  ...CLUSTERS.map((c) => `/${c.pillar}/${c.slug}`),
-  ...PUBLISHED_COUNTRIES.map((c) => `/${AP_PILLAR}/${c.slug}`),
 ]
