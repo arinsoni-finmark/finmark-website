@@ -59,12 +59,12 @@ export const PRODUCTS = [
     label: 'FP&A',
     slug: 'fpa',
     to: '/fpa',
-    description: 'Financial planning, budgeting, and forecasting.',
+    description: 'Runway, hiring impact, and a month you can actually read.',
     badge: null,
     features: [],
     intro: {
-      metaTitle: 'FP&A & Financial Reporting Automation | FinMark.ai',
-      metaDescription: 'Automated financial reporting for enterprise groups. P&L, balance sheet, cash flow, and budget vs actuals — generated from your trial balance and GL data. Live in production.',
+      metaTitle: 'FP&A — Runway, Hiring Impact and a Month You Can Read | FinMark.ai',
+      metaDescription: 'Connect QuickBooks or a spreadsheet and see where the business stands today: real runway that accounts for revenue growth, what moved last month in plain English, and what a hire does to runway before you make the offer.',
       h1: 'FP&A',
       // TODO: set uploadDate (ISO 8601, e.g. '2026-08-14'). videoSchema stays
       // silent until it is, because Google requires uploadDate for
@@ -78,10 +78,13 @@ export const PRODUCTS = [
         uploadDate: null,
         poster: null,
       },
+      // Copy follows the product walkthrough above — every claim here is one
+      // the video demonstrates on screen. Nothing has been extrapolated.
       body: [
-        'Month-end reporting at most enterprise groups still means days of spreadsheet work — pulling trial balances, classifying GL lines, and rebuilding the same P&L, balance sheet, and cash flow every month. FinMark.ai\'s FP&A product automates that: upload your trial balance and GL data, and finished management reports come out the other side.',
-        'It goes beyond the core statements — budget vs actuals with annual plans and latest estimates, expense reporting by category, SKU-level margin analysis, rebate analytics, and built-in insights that answer the questions management actually asks at review meetings.',
-        'Built for multi-company groups: each entity gets its own isolated reporting portal, with a consolidated view for the group. Live in production with enterprise groups today, on the same platform that powers our accounts payable automation.',
+        'Month-end takes a week, and by the time the numbers arrive the decisions that shaped them have already been made. FinMark.ai\'s FP&A connects to QuickBooks, or to a spreadsheet, and keeps your position current without waiting for a close.',
+        'You get the handful of numbers that actually matter, and a plain-English account of what moved last month and why. Every figure traces back to your books, so anything that looks wrong can be followed to the entry behind it.',
+        'Runway, done properly. Not cash divided by burn — that quietly ignores the fact that revenue is growing, which is usually the difference between the runway you think you have and the runway you actually have.',
+        'And you can plan a hire before you commit to it. Put in a role, a salary and a start date, and see the fully loaded monthly cost and exactly what it does to your runway — while the offer is still a question rather than a liability.',
       ],
     },
   },
