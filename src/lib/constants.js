@@ -66,6 +66,18 @@ export const PRODUCTS = [
       metaTitle: 'FP&A & Financial Reporting Automation | FinMark.ai',
       metaDescription: 'Automated financial reporting for enterprise groups. P&L, balance sheet, cash flow, and budget vs actuals — generated from your trial balance and GL data. Live in production.',
       h1: 'FP&A',
+      // TODO: set uploadDate (ISO 8601, e.g. '2026-08-14'). videoSchema stays
+      // silent until it is, because Google requires uploadDate for
+      // VideoObject and rejects the node without it — so the video plays but
+      // is not yet eligible for a video rich result.
+      video: {
+        youtubeId: 'jcNLfqfxJoE',
+        title: 'Adding one engineer costs you 2.4 months of runway. See it before you offer.',
+        description:
+          'A walkthrough of FinMark.ai FP&A: seeing the runway impact of a hiring decision before the offer goes out.',
+        uploadDate: null,
+        poster: null,
+      },
       body: [
         'Month-end reporting at most enterprise groups still means days of spreadsheet work — pulling trial balances, classifying GL lines, and rebuilding the same P&L, balance sheet, and cash flow every month. FinMark.ai\'s FP&A product automates that: upload your trial balance and GL data, and finished management reports come out the other side.',
         'It goes beyond the core statements — budget vs actuals with annual plans and latest estimates, expense reporting by category, SKU-level margin analysis, rebate analytics, and built-in insights that answer the questions management actually asks at review meetings.',
